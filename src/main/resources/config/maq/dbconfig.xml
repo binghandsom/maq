@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <!-- 数据库配置 -->
+    <entry key="jdbc.driver"><![CDATA[com.mysql.jdbc.Driver]]></entry>
+    <entry key="jdbc.username"><![CDATA[root]]></entry>
+    <entry key="jdbc.pass"><![CDATA[wang]]></entry>
+    <entry key="jdbc.url"><![CDATA[jdbc:mysql://localhost:3306/miaiqing]]></entry>
+  	<entry key="jdbc.pool.minIdle"><![CDATA[10]]></entry>
+  	<entry key="jdbc.pool.maxActive"><![CDATA[30]]></entry>
+  	<entry key="hibernate.ehcache.configFile"><![CDATA[cache/ehcache-hibernate-local.xml]]></entry>
+  	
+  	<entry key="hibernate.show_sql"><![CDATA[true]]></entry>
+  	<entry key="hibernate.format_sql"><![CDATA[true]]></entry>
+  	<entry key="hibernate.dialect"><![CDATA[org.hibernate.dialect.MySQLDialect]]></entry>
+</properties>    

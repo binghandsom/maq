@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="1000" timeToLiveSeconds="1000" overflowToDisk="false"
+		memoryStoreEvictionPolicy="LRU" />
+		
+	
+	<cache name="myCache" maxElementsInMemory="100"
+		maxElementsOnDisk="0" eternal="false" overflowToDisk="false"
+		diskPersistent="false" timeToIdleSeconds="119" timeToLiveSeconds="119"
+		diskSpoolBufferSizeMB="50" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="FIFO" />
+		
+	<!-- <cache name="com.equip.domain.Equipuser" maxElementsInMemory="100"
+		maxElementsOnDisk="0" eternal="false" overflowToDisk="false"
+		diskPersistent="false" timeToIdleSeconds="119" timeToLiveSeconds="119"
+		diskSpoolBufferSizeMB="50" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="FIFO" /> -->
+
+</ehcache>
