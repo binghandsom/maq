@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
 
 /**
  * @desc:MongoDB commonDao
  * @author meihf
  * @param <T>
  */
+@Repository
 public abstract class CommonDao<T> {
 
 	@Autowired
