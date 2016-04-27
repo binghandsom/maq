@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @TransactionConfiguration(defaultRollback=false)
-@ContextConfiguration(locations = {"/spring_core/applicationContext.xml","/spring_core/service.xml"})
+@ContextConfiguration(locations = {"classpath:config/spring/applicationContext.xml","classpath:config/mongodb/mongodb.xml"})
 public class SpringBaseTest extends AbstractTransactionalJUnit4SpringContextTests{
 
 }

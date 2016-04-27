@@ -1,24 +1,23 @@
 package com.maq.service;
 
-import java.util.List;
-
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.maq.base.SpringBaseTest;
-
-public class BlogTransmitServiceTest  extends SpringBaseTest {
+import com.maq.service.impl.AccountSvcImpl;
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:config/spring/applicationContext.xml","classpath:config/mongodb/mongodb.xml"})
+public class AccountSvcImplTest  {
 //
-//	@Autowired
-//	private BlogTransmitService transmitService;
+	@Autowired
+	private AccountSvcImpl accountSvcImpl;
 //	
-//	@Test
-//	public void testFindList(){
-//		List<BlogTransmit> list = transmitService.findBlogTransmitList();
-//		for(BlogTransmit bt : list){
-//			System.out.println(bt);
-//		}
-//	}
+	@Test
+	public void testSave(){
+		System.out.println("xxx");
+	}
 //	
 //	
 //	@Test

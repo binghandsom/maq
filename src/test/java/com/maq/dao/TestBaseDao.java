@@ -20,7 +20,7 @@ import com.maq.dao.UserDao;
 import com.maq.service.UserSvc;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:config/spring/applicationContext.xml"})
+@ContextConfiguration(locations={"classpath:config/spring/applicationContext.xml","classpath:config/mongodb/mongodb.xml"})
 public class TestBaseDao{
 
 	@Autowired
@@ -34,8 +34,8 @@ public class TestBaseDao{
 	
 	@Test
 	public void test(){
-		User user = userSvc.getByName("meihf");
+//		User user = userSvc.getByName("meihf");
 //		User user = userDao.queryOne(new Query().addCriteria(Criteria.where("loginName").is("meihf")));
-		System.out.println(user.getLoginName());
+		System.out.println("xx");
 	}
 }
