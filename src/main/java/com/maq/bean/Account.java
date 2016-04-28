@@ -62,6 +62,11 @@ public class Account {
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", phone=" + phone + ", email=" + email + ", password=" + password + ", isDel="
+				+ isDel + "]";
+	}
 	
 	
 	
