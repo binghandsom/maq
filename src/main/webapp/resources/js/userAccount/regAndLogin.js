@@ -32,6 +32,9 @@ $(function() {
 	var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,9})$/;
 	var phone = $("#inputPhone");
 	var email = $("#inputEmail");
+	var infoAccountOk = false;
+	var infoPassOk = false;
+	var infoRepassOk = false;
 	$("input.regAccount").blur(function() {
 		if (regMethod == "phone") {
 			// 手机注册
@@ -41,8 +44,10 @@ $(function() {
 					"background-color" : "#D6D6FF"
 				});
 				messageAccount.html("");
+				infoAccountOk = true;
 			} else {
 				messageAccount.html("手机号码格式不正确");
+				infoAccountOk = false;
 			}
 		} else {
 			// 邮箱注册
@@ -52,8 +57,10 @@ $(function() {
 					"background-color" : "#D6D6FF"
 				});
 				messageAccount.html("");
+				infoAccountOk = true;
 			} else {
 				messageAccount.html("邮箱格式不正确");
+				infoAccountOk = false;
 			}
 		}
 
@@ -66,7 +73,7 @@ $(function() {
 	var password = "";
 	$("#inputPassword").keyup(function() {
 		var tempPass = $(this).val();
-		// alert(tempPass);
+		infoPassOk = false;
 		if (tempPass.length < 6) {
 			messagePass.html("密码长度必须大于6");
 			messagePass.css({
@@ -92,6 +99,7 @@ $(function() {
 			messagePass.css({
 				"color" : "yellow"
 			});
+			infoPassOk = true;
 		} else {
 			messagePass.css({
 				"color" : "red"
@@ -103,8 +111,9 @@ $(function() {
 		}
 	});
 	$("#rePassword").keyup(function() {
-
+		infoRepassOk = false;
 		if ($(this).val() == password) {
+			infoRepassOk = true;
 			messRepass.html("");
 		} else {
 			messRepass.html("两次输入密码不一致");
@@ -120,6 +129,26 @@ $(function() {
 	// 登录方法
 	$("#login").click(function() {
 		login();
+	});
+
+	// 注册验证码，验证码发送至手机或邮箱
+	$("#getValidateCode").click(function() {
+		if (regMethod == "phone") {
+			if (infoAccountOk) {
+				var phoneNum = phone.val();
+				alert(phoneNum);
+				$.ajax({
+					url : ctx+"/userAccount/sendRegValidateCode",
+					data : "phoneNum=" + phoneNum,
+					type : 'POST',
+					async : false
+				});
+			}
+
+		} else {
+
+		}
+
 	});
 
 });

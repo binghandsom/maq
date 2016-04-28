@@ -32,12 +32,12 @@
 				<label>账号</label><input type="text" name="email" id="email" value=""
 					placeholder="手机/邮箱" /> <label>密码</label><input type="password"
 					name="password" id="loginPassword" value="" placeholder="登录密码" />
-			<button id="login" class="btn btn-warning">登录</button>
+				<button id="login" class="btn btn-warning">登录</button>
 			</div>
 			<input type="checkbox" name="remem" id="remem" value="false" /><span
 				style="color: darkgray;">下次自动登陆</span> &nbsp;&nbsp;&nbsp; <a
-				href="#">忘记密码？</a>
-			<label id="loginError" style="display:inline;color:red;"></label>
+				href="#">忘记密码？</a> <label id="loginError"
+				style="display: inline; color: red;"></label>
 		</div>
 	</div>
 	<div class="row ">
@@ -63,14 +63,15 @@
 					</div>
 
 					<input type="email" id="inputEmail" class="form-control regAccount"
-						style="display: none;" placeholder="电子邮箱" required >
-					<input type="phone" id="inputPhone" class="form-control regAccount"
-						style="" placeholder="手机号码" required > <label
+						style="display: none;" placeholder="电子邮箱" required> <input
+						type="phone" id="inputPhone" class="form-control regAccount"
+						style="" placeholder="手机号码" required> <label
 						class="messAccount mess" style="color: red;"></label> <br /> <input
 						type="password" id="inputPassword" class="form-control"
-						placeholder="密码" required> <label class="messPass mess"
-						style="color: red;"></label> <br /> <input type="password"
-						id="rePassword" class="form-control" placeholder="确认密码" required>
+						placeholder="密码" oncopy="return false" onpaste="return false">
+					<label class="messPass mess" style="color: red;"></label> <br /> <input
+						type="password" id="rePassword" class="form-control"
+						placeholder="确认密码" oncopy="return false" onpaste="return false">
 					<label class="messRepass mess" style="color: red;"></label> <br />
 					<button class="btn btn-lg btn-success btn-block">免费注册</button>
 					<div

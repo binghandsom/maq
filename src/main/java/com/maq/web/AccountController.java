@@ -66,4 +66,9 @@ public class AccountController {
 		return rm;
 
 	}
+	@RequestMapping(value="sendRegValidateCode",method=RequestMethod.POST)
+	public void sendRegValidateCode(){
+		System.out.println("XXX");
+	}
+	
 }
