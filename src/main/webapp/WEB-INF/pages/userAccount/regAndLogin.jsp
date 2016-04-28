@@ -44,8 +44,8 @@
 
 		<div class="col-lg-12 col-sm-12 col-md-12">
 			<div class="form"
-				style="z-index: 1; position: absolute; width: 300px; height: 400px; right: 180px; background: grey; opacity: 0.8; margin-top: 80px; padding: 0 15px;">
-				<form class="form-signin" id="regForm">
+				style="z-index: 1; position: absolute; width: 300px; right: 180px; background: grey; opacity: 0.8; margin-top: 80px; padding: 15px 15px;">
+				<div class="form-signin" id="regForm">
 					<h2 class="form-signin-heading" style="color: wheat;">注册账号</h2>
 					<span class="radio" id="genderInput"> <label><input
 							type="radio" name="gender" id="" value="0" checked> 女 </label> <label><input
@@ -53,35 +53,35 @@
 					</span>
 
 					<div id="whichWayReg">
-						<label> 选择何种注册方式 <br>
-							<div class="btn-group-sm btn-group" role="group">
+						<label><span>选择何种注册方式</span> <span
+							class="btn-group-sm btn-group" style="display: inline;"
+							role="group">
 								<button type="button" class="btn  btn-primary">手机</button>
 								<button type="button" class="btn  btn-default">邮箱</button>
-							</div>
-						</label> <br> <br>
+						</span></label> <br> <br>
 
 					</div>
 
 					<input type="email" id="inputEmail" class="form-control regAccount"
-						style="display: none;" placeholder="电子邮箱" required> <input
-						type="phone" id="inputPhone" class="form-control regAccount"
-						style="" placeholder="手机号码" required> <label
+						style="display: none;" name="email" placeholder="电子邮箱" required>
+					<input type="phone" id="inputPhone" name="phone"
+						class="form-control regAccount" style="" placeholder="手机号码"
+						value="12345678907" required> <label
 						class="messAccount mess" style="color: red;"></label> <br /> <input
-						type="password" id="inputPassword" class="form-control"
-						placeholder="密码" oncopy="return false" onpaste="return false">
-					<label class="messPass mess" style="color: red;"></label> <br /> <input
-						type="password" id="rePassword" class="form-control"
-						placeholder="确认密码" oncopy="return false" onpaste="return false">
-					<label class="messRepass mess" style="color: red;"></label> <br />
-					<button class="btn btn-lg btn-success btn-block">免费注册</button>
-					<div
-						style="width: 50%; height: 90px; position: relative; top: -295px; left: 140px;">
-						<button class="btn-xs btn-info" id="getValidateCode">获取验证码</button>
-						<br> <input name="validateCode" style="width: 6em;"
-							placeholder="60秒内填写" /> <br />
-					</div>
+						type="password" id="inputPassword" name="password"
+						value="12456##a" class="form-control" placeholder="密码"
+						oncopy="return false" onpaste="return false"> <label
+						class="messPass mess" style="color: red;"></label> <br /> <input
+						type="password" id="rePassword" name="rePassword" value="12456##a"
+						class="form-control" placeholder="确认密码" oncopy="return false"
+						onpaste="return false"> <label class="messRepass mess"
+						style="color: red;"></label> <br />
+					<button class="btn-xs btn-info" id="getValidateCode">获取验证码</button>
+					<input name="validateCode" style="width: 6em;" placeholder="60秒内填写" />
+					<br /> <label class="messVali mess" style="color: red;"></label> <br />
+					<button id="registerBtn" class="btn btn-lg btn-success btn-block">免费注册</button>
 
-				</form>
+				</div>
 
 			</div>
 

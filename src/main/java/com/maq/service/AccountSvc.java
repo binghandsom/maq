@@ -9,4 +9,8 @@ public interface AccountSvc {
 	void add(Account account);
 
 	ResponseMessage loginCheck(Account account, HttpSession session);
+
+	ResponseMessage sendValidateCode(String phoneNum, String email, String reason,HttpSession session);
+
+	ResponseMessage register(Account account,HttpSession session);
 }

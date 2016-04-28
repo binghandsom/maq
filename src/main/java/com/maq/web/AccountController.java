@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,15 +35,12 @@ public class AccountController {
 		return "common/index";
 	}
 
-	@RequestMapping("register")
-	public String register() {
-		if (1 == 1) {
-			// 注册成功
-			return "common/index";
-		} else {
-			// 注册失败，回到注册页
-			return "userAccount/regAndLogin";
-		}
+	@RequestMapping(value = "register", method = RequestMethod.POST)
+	public ResponseMessage register(Account account, HttpSession session,Model model) {
+
+		ResponseMessage rm = accountSvc.register(account,session);
+
+		return rm;
 	}
 
 	@RequestMapping("index")
@@ -66,9 +64,19 @@ public class AccountController {
 		return rm;
 
 	}
-	@RequestMapping(value="sendRegValidateCode",method=RequestMethod.POST)
-	public void sendRegValidateCode(){
-		System.out.println("XXX");
+
+	/**
+	 * 
+	 * @param phoneNum
+	 * @param email
+	 * @param reason
+	 *            发送验证码的原因，可以是注册，也可以是改密
+	 * @param session
+	 *            将验证码保存起来
+	 */
+	@RequestMapping(value = "sendRegValidateCode", method = RequestMethod.POST)
+	public void sendValidateCode(String phone, String email, String reason, HttpSession session) {
+		accountSvc.sendValidateCode(phone, email, reason, session);
 	}
-	
+
 }

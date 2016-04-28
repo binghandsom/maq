@@ -14,8 +14,6 @@ public class AliDayuSMSUtil {
 	private final static String SECRET = "c65e954cadcc6c819d4b0415ad521a3b";
 	private static TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, SECRET);
 
-	
-
 	/**
 	 * 
 	 * @param targetPhoneNum
@@ -39,7 +37,6 @@ public class AliDayuSMSUtil {
 			System.out.println(rsp.getBody());
 			System.out.println(rsp.getMsg());
 		} catch (ApiException e) {
-
 			e.printStackTrace();
 		}
 		return validateCode;

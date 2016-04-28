@@ -2,8 +2,8 @@ $(function() {
 	var regMethod = "phone";
 	$("#whichWayReg button").click(function() {
 
-		$("form#regForm input.form-control").val("");
-		$("form#regForm label.mess").text("");
+		$("div#regForm input.form-control").val("");
+		$("div#regForm label.mess").text("");
 
 		var whichWay = $(this).html();
 
@@ -35,7 +35,7 @@ $(function() {
 	var infoAccountOk = false;
 	var infoPassOk = false;
 	var infoRepassOk = false;
-	$("input.regAccount").blur(function() {
+	$("input.regAccount").keyup(function() {
 		if (regMethod == "phone") {
 			// 手机注册
 			var phoneVal = phone.val().trim();
@@ -132,23 +132,53 @@ $(function() {
 	});
 
 	// 注册验证码，验证码发送至手机或邮箱
+	var regData = "";
 	$("#getValidateCode").click(function() {
-		if (regMethod == "phone") {
-			if (infoAccountOk) {
+
+		if (infoAccountOk) {
+			if (regMethod == "phone") {
+				// 手机验证
 				var phoneNum = phone.val();
 				alert(phoneNum);
+				regData = "phone=" + phoneNum + "&reason=register";
+			} else {
+				// 邮箱验证
+				var emailVal = email.val();
+				alert(emailVal);
+				regData = "email=" + emailVal + "&reason=register";
+			}
+
+			$.ajax({
+				url : ctx + "/userAccount/sendRegValidateCode",
+				data : regData,
+				type : 'POST',
+				async : false
+			});
+		}
+
+	});
+	$("input[name=validateCode]").focus(function(){
+		$(this).html("");
+	});
+	$("#registerBtn").click(function() {
+		// 信息填写完毕
+		if (infoAccountOk && infoPassOk && infoRepassOk) {
+			var valiValue = $("input[name=validateCode]").val().trim();
+			if ("" == valiValue) {
+				$("label.messVali").html("请填写验证码");
+			} else {
+				// 注册请求
 				$.ajax({
-					url : ctx+"/userAccount/sendRegValidateCode",
-					data : "phoneNum=" + phoneNum,
+					url : ctx + "/userAccount/register",
+					data : "email=" + email + "&reason=register",
 					type : 'POST',
 					async : false
 				});
 			}
-
 		} else {
-
+			// 信息不完全
+			alert("信息填写不完全");
 		}
-
 	});
 
 });
@@ -170,7 +200,6 @@ login = function() {
 			} else {
 				$("#loginError").html("账号不存在或密码错误！");
 			}
-
 		}
 	});
 }
