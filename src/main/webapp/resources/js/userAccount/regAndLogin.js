@@ -15,6 +15,7 @@ $(function() {
 				"display" : ""
 			});
 			regMethod = "phone";
+			$("#getValidateCode").html("获取手机验证码");
 		} else {
 			$("#inputPhone").css({
 				"display" : "none"
@@ -23,6 +24,7 @@ $(function() {
 				"display" : ""
 			});
 			regMethod = "email";
+			$("#getValidateCode").html("获取邮箱验证码");
 		}
 	});
 
@@ -133,53 +135,108 @@ $(function() {
 
 	// 注册验证码，验证码发送至手机或邮箱
 	var regData = "";
-	$("#getValidateCode").click(function() {
+	$("#getValidateCode")
+			.click(
+					function() {
 
-		if (infoAccountOk) {
-			if (regMethod == "phone") {
-				// 手机验证
-				var phoneNum = phone.val();
-				alert(phoneNum);
-				regData = "phone=" + phoneNum + "&reason=register";
-			} else {
-				// 邮箱验证
-				var emailVal = email.val();
-				alert(emailVal);
-				regData = "email=" + emailVal + "&reason=register";
-			}
+						if (infoAccountOk) {
+							if (regMethod == "phone") {
+								// 手机验证
+								var phoneNum = phone.val();
+								regData = "phone=" + phoneNum
+										+ "&reason=register";
+							} else {
+								// 邮箱验证
+								var emailVal = email.val();
+								regData = "email=" + emailVal
+										+ "&reason=register";
+							}
 
-			$.ajax({
-				url : ctx + "/userAccount/sendRegValidateCode",
-				data : regData,
-				type : 'POST',
-				async : false
-			});
-		}
+							$
+									.ajax({
+										url : ctx
+												+ "/userAccount/sendRegValidateCode",
+										data : regData,
+										type : 'POST',
+										async : false,
+										contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+										success : function(result) {
+											// alert(result.success);
+											if (result.success) {
+												var obj = $("input[name=validateCode]");
+												obj.removeAttr("disabled");
+												var second = 60;
+												setInterval(
+														function() {
+															obj
+																	.attr(
+																			"placeholder",
+																			--second
+																					+ "秒内填写");
+															if (second <= 0) {
+																$(
+																		"input[name=validateCode]")
+																		.attr(
+																				"placeholder",
+																				"请重新获取");
+															}
+														}, 1000);
+											} else {
 
-	});
-	$("input[name=validateCode]").focus(function(){
+											}
+										}
+									});
+						}
+
+					});
+	$("input[name=validateCode]").focus(function() {
 		$(this).html("");
+		$("label.messVali").html("");
 	});
-	$("#registerBtn").click(function() {
-		// 信息填写完毕
-		if (infoAccountOk && infoPassOk && infoRepassOk) {
-			var valiValue = $("input[name=validateCode]").val().trim();
-			if ("" == valiValue) {
-				$("label.messVali").html("请填写验证码");
-			} else {
-				// 注册请求
-				$.ajax({
-					url : ctx + "/userAccount/register",
-					data : "email=" + email + "&reason=register",
-					type : 'POST',
-					async : false
-				});
-			}
-		} else {
-			// 信息不完全
-			alert("信息填写不完全");
-		}
-	});
+	$("#registerBtn")
+			.click(
+					function() {
+						// 信息填写完毕
+						// if (infoAccountOk && infoPassOk && infoRepassOk) {
+						if (true) {
+							var valiValue = $("input[name=validateCode]").val()
+									.trim();
+							// if ("" == valiValue) {
+							if (false) {
+								$("label.messVali").html("请填写验证码");
+							} else {
+								// 注册请求
+								var data = "";
+								if (regMethod == "phone") {
+									// 手机验证
+									var phoneNum = phone.val();
+									data = "phone=" + phoneNum + "&password="
+											+ password + "&valiCode="
+											+ valiValue;
+								} else {
+									// 邮箱验证
+									var emailVal = email.val();
+									data = "email=" + emailVal + "&password="
+											+ password + "&valiCode="
+											+ valiValue;
+								}
+								$
+										.ajax({
+											url : ctx + "/userAccount/register",
+											data : data,
+											type : 'POST',
+											async : false,
+											contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+											success : function(result) {
+
+											}
+										});
+							}
+						} else {
+							// 信息不完全
+							alert("信息填写不完全");
+						}
+					});
 
 });
 login = function() {

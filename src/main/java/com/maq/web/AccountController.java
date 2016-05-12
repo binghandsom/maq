@@ -28,17 +28,25 @@ public class AccountController {
 	 */
 	@RequestMapping("login")
 	public String login(HttpServletRequest request) {
-		// Account account=new Account();
-		// account.setEmail("ssss");
-		// account.setId("98djfjskdfksd20");
-		// accountSvc.add(account);
+		Account account = new Account();
+		account.setEmail("ssss");
+		account.setId("98djfjskdfksds2s0");
+		System.out.println(account.toString());
+		accountSvc.add(account);
+
 		return "common/index";
 	}
 
 	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public ResponseMessage register(Account account, HttpSession session,Model model) {
-
-		ResponseMessage rm = accountSvc.register(account,session);
+	public ResponseMessage register(Account account, String valiCode, HttpSession session, Model model) {
+		ResponseMessage rm=null;
+		if (!accountSvc.accountAvailable(account,session,valiCode)) {
+			// 如果账号不可用,或者验证码出现问题
+			rm.setSuccess(false);
+		} else {
+			rm = accountSvc.register(account, session);
+		}
+		System.out.println(account.toString() + valiCode);
 
 		return rm;
 	}
@@ -49,7 +57,7 @@ public class AccountController {
 			// session中有保存有用户账号
 			return "common/index";
 		} else {
-			// session中没有保存有用户账号
+			// session中没有保存有用户账号\
 			return "userAccount/regAndLogin";
 		}
 	}
@@ -75,8 +83,12 @@ public class AccountController {
 	 *            将验证码保存起来
 	 */
 	@RequestMapping(value = "sendRegValidateCode", method = RequestMethod.POST)
-	public void sendValidateCode(String phone, String email, String reason, HttpSession session) {
-		accountSvc.sendValidateCode(phone, email, reason, session);
+	@ResponseBody
+	public ResponseMessage sendValidateCode(String phone, String email, String reason, HttpSession session) {
+		System.out.println(phone);
+		ResponseMessage rm = accountSvc.sendValidateCode(phone, email, reason, session);
+		System.out.println(rm);
+		return rm;
 	}
 
 }

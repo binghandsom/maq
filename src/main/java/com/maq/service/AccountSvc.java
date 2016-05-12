@@ -13,4 +13,6 @@ public interface AccountSvc {
 	ResponseMessage sendValidateCode(String phoneNum, String email, String reason,HttpSession session);
 
 	ResponseMessage register(Account account,HttpSession session);
+
+	boolean accountAvailable(Account account, HttpSession session, String valiCode);
 }

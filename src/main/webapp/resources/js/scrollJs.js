@@ -15,17 +15,7 @@ $(function() {
 });
 
 function parseDom(imgSrc, info, href) {
-	/*<li class="news-item">
-												<table cellpadding="4">
-													<tr>
-														<td><img src="images/7.png" width="60" class="img-circle" /></td>
-														<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis enim... <a href="#">Read more...</a></td>
-													</tr>
-												</table>
-											</li>
-											<li class="news-item"><table cellpadding="4"><td src="xxx" width="60" class="img-circle"></td><td>yyy<a href="#">readMore</a></td></table></li>
-											* */
-	　　
+	
 	var li = document.createElement("li");
 	var table = document.createElement("table");
 	var tr = document.createElement("tr");

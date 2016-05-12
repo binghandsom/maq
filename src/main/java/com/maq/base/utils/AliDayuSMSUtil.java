@@ -12,24 +12,35 @@ public class AliDayuSMSUtil {
 	private final static String URL = "http://gw.api.taobao.com/router/rest";
 	private final static String APPKEY = "23342306";
 	private final static String SECRET = "c65e954cadcc6c819d4b0415ad521a3b";
+	public final static String SIGNNAME_REG = "注册验证";
+	public final static String SIGNNAME_CHANGE_PASSWORD = "变更验证";
 	private static TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, SECRET);
 
 	/**
 	 * 
 	 * @param targetPhoneNum
 	 *            接收短信的手机
-	 * @return validateCode
+	 * @param signName汉字常量
+	 *            如： 注册验证 登录验证 变更验证 参考：
+	 *            http://www.alidayu.com/admin/service/sign
+	 * @return
 	 */
-	public static String sendAliDayuMSG(String targetPhoneNum) {
+	public static String sendAliDayuMSG(String targetPhoneNum, String signName) {
 		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend("123456");
 		req.setSmsType("normal");
-		req.setSmsFreeSignName("大鱼测试");
+		req.setSmsFreeSignName(signName);
 		String validateCode = generateRandomCode();
 		System.out.println(validateCode);
-		req.setSmsParamString("{\"code\":\" " + validateCode + "\",\"product\":\"miaiqing\"}");
+		req.setSmsParamString("{\"code\":\" " + validateCode + "\",\"product\":\"wantLover\"}");
 		req.setRecNum(targetPhoneNum);
-		req.setSmsTemplateCode("SMS_7510346");
+		if (SIGNNAME_REG.equals(signName)) {
+			// 注册短信模板
+			req.setSmsTemplateCode("SMS_7510344");
+		} else if (SIGNNAME_CHANGE_PASSWORD.equals(signName)) {
+			// 修改密码验证码模板
+			req.setSmsTemplateCode("SMS_7510342");
+		}
 		// 验证码${code}，您正在登录${product}，若非本人操作，请勿泄露。
 		AlibabaAliqinFcSmsNumSendResponse rsp;
 		try {
@@ -47,6 +58,6 @@ public class AliDayuSMSUtil {
 	}
 
 	public static void main(String[] args) {
-		sendAliDayuMSG("13095531769");
+		sendAliDayuMSG("13095531769", SIGNNAME_REG);
 	}
 }
