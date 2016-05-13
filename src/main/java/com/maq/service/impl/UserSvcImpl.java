@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import com.maq.bean.User;
+import com.maq.bean.UserInfo;
 import com.maq.dao.UserDao;
 import com.maq.service.UserSvc;
 @Service
@@ -14,7 +14,7 @@ public class UserSvcImpl implements UserSvc{
 	@Autowired
 	private UserDao userDao;
 
-	public User getByName(String username) {
+	public UserInfo getByName(String username) {
 		return userDao.queryById(username);
 	}
 }

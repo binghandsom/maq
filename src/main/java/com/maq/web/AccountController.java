@@ -1,5 +1,8 @@
 package com.maq.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -23,43 +26,28 @@ public class AccountController {
 	@Autowired
 	private AccountSvc accountSvc;
 
-	/**
-	 * @return
-	 */
-	@RequestMapping("login")
-	public String login(HttpServletRequest request) {
-		Account account = new Account();
-		account.setEmail("ssss");
-		account.setId("98djfjskdfksds2s0");
-		System.out.println(account.toString());
-		accountSvc.add(account);
-
-		return "common/index";
+	@RequestMapping("regAndLogin")
+	public String regAndLogin() {
+		return "userAccount/regAndLogin";
 	}
 
 	@RequestMapping(value = "register", method = RequestMethod.POST)
+	@ResponseBody
 	public ResponseMessage register(Account account, String valiCode, HttpSession session, Model model) {
-		ResponseMessage rm=null;
-		if (!accountSvc.accountAvailable(account,session,valiCode)) {
+		ResponseMessage rm = new ResponseMessage();
+		Map<String, String> msgMap = new HashMap<String, String>();
+		Object[] availableArr = accountSvc.accountAvailable(account, session, valiCode);
+		if (!(Boolean) availableArr[0]) {
 			// 如果账号不可用,或者验证码出现问题
 			rm.setSuccess(false);
+			msgMap.put("resultMess", availableArr[1].toString());
+			rm.setMessage(msgMap);
 		} else {
 			rm = accountSvc.register(account, session);
 		}
 		System.out.println(account.toString() + valiCode);
 
 		return rm;
-	}
-
-	@RequestMapping("index")
-	public String index() {
-		if (1 == 2) {
-			// session中有保存有用户账号
-			return "common/index";
-		} else {
-			// session中没有保存有用户账号\
-			return "userAccount/regAndLogin";
-		}
 	}
 
 	@RequestMapping(value = "loginCheck", method = RequestMethod.POST)

@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.maq.bean.User;
+import com.maq.bean.UserInfo;
 import com.maq.dao.UserDao;
 import com.maq.service.UserSvc;
 

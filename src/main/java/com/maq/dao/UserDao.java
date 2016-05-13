@@ -2,13 +2,13 @@ package com.maq.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.maq.bean.User;
+import com.maq.bean.UserInfo;
 @Repository
-public class UserDao extends CommonDao<User> {
+public class UserDao extends CommonDao<UserInfo> {
 
 	@Override
-	protected Class<User> getEntityClass() {
-		return User.class;
+	protected Class<UserInfo> getEntityClass() {
+		return UserInfo.class;
 	}
 
 }

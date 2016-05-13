@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.maq.base.utils.AliDayuSMSUtil;
+import com.maq.base.utils.MD5Util;
 import com.maq.base.utils.dto.ResponseMessage;
 import com.maq.bean.Account;
 import com.maq.dao.AccountDao;
@@ -46,6 +47,8 @@ public class AccountSvcImpl implements AccountSvc {
 			rm.setSuccess(false);
 			return rm;
 		}
+		// 转化为md5字符串
+		password = MD5Util.GetMD5Code(password);
 		if (email.contains("@")) {
 			// 是邮箱
 			query = new Query(Criteria.where("email").is(email).andOperator(Criteria.where("password").is(password)));
@@ -162,26 +165,24 @@ public class AccountSvcImpl implements AccountSvc {
 
 	public ResponseMessage register(Account account, HttpSession session) {
 		ResponseMessage rm = new ResponseMessage();
-		
-		if (accountDao.isUsed(account)) {
-			// 存在,号码、邮箱已经被注册过
-			rm.setSuccess(false);
-		} else {
-			// 不存在该账号，继续注册
-			account.setDel(false);
-			accountDao.save(account);
-			rm.setSuccess(true);
-			session.setAttribute("account", account);
-		}
+
+		// 不存在该账号，继续注册
+		account.setDel(false);
+		account.setPassword(MD5Util.GetMD5Code(account.getPassword()));
+		accountDao.save(account);
+		rm.setSuccess(true);
+		session.setAttribute("account", account);
 		return rm;
 	}
 
-	public boolean accountAvailable(Account account, HttpSession session, String valiCode) {
+	public Object[] accountAvailable(Account account, HttpSession session, String valiCode) {
+		// 如果此账号已经被注册过，不予注册
 		// 判断账号可用不可用是根据session中是否有改账号来决定，因为注册前获取验证码成功后将账号放到了session中，如果session中没有此账号，则不予注册
 		// 如果session中有那个账号，再验证验证码是否一致。两者一致才继续注册。否则不予注册
 		// 判断验证码是否过期，过期不予注册
+
 		if (valiCodeTimeMap == null || valiCodeTimeMap.size() == 0) {
-			return false;
+			return new Object[] { false, "未获取验证码" };
 		} else {
 			String phone = account.getPhone();
 			String email = account.getEmail();
@@ -190,25 +191,28 @@ public class AccountSvcImpl implements AccountSvc {
 			long beforeMil = 0L;
 			if (valiCodeTimeMap.containsKey(phone)) {
 				Object[] array = valiCodeTimeMap.get(phone);
-				beforeMil = Long.parseLong((String) array[1]);
+				beforeMil = Long.parseLong(array[1].toString());
 				if (currentMil - beforeMil > 60 * 1000) {
-					return false;
+					return new Object[] { false, "验证码过期" };
 				}
 				if (array[0].toString().equalsIgnoreCase(valiCode)) {
-					return true;
+					return new Object[] { true, "" };
 				}
 			} else if (valiCodeTimeMap.containsKey(email)) {
 				Object[] array = valiCodeTimeMap.get(email);
 				beforeMil = Long.parseLong((String) array[1]);
 				if (currentMil - beforeMil > 60 * 1000) {
-					return false;
+					return new Object[] { false, "验证码过期" };
 				}
 				if (array[0].toString().equalsIgnoreCase(valiCode)) {
-					return true;
+					return new Object[] { true, "" };
 				}
 			}
-			return false;
 		}
+		if (accountDao.isUsed(account)) {
+			// 存在,号码、邮箱已经被注册过
+			return new Object[] { false, "该账号已经被注册过，不允许再注册" };
+		}
+		return new Object[] { false, "验证码不正确" };
 	}
-
 }

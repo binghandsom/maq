@@ -228,7 +228,16 @@ $(function() {
 											async : false,
 											contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 											success : function(result) {
-
+												if (result.success) {
+													alert("注册成功");
+													window.location.href = ctx
+															+ "/userInfo/editMainInfo";
+												} else {
+													if (result.message) {
+														alert("注册失败"
+																+ result.message.resultMess);
+													}
+												}
 											}
 										});
 							}
@@ -250,10 +259,8 @@ login = function() {
 		data : data,
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		success : function(result) {
-			// alert(JSON.stringify(result));
-			// alert(result.success);
 			if (result.success) {
-				window.location.href = "xxx";
+				window.location.href = ctx + "/common/index";
 			} else {
 				$("#loginError").html("账号不存在或密码错误！");
 			}
