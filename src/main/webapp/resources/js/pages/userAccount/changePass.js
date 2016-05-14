@@ -1,71 +1,34 @@
+/**
+ * 修改密码页面js
+ */
 $(function() {
-	var regMethod = "phone";
-	$("#whichWayReg button").click(function() {
-
-		$("div#regForm input.form-control").val("");
-		$("div#regForm label.mess").text("");
-
-		var whichWay = $(this).html();
-
-		if ("手机" == whichWay) {
-			$("#inputEmail").css({
-				"display" : "none"
-			});
-			$("#inputPhone").css({
-				"display" : ""
-			});
-			regMethod = "phone";
-			$("#getValidateCode").html("获取手机验证码");
-		} else {
-			$("#inputPhone").css({
-				"display" : "none"
-			});
-			$("#inputEmail").css({
-				"display" : ""
-			});
-			regMethod = "email";
-			$("#getValidateCode").html("获取邮箱验证码");
-		}
-	});
-
 	var messageAccount = $("label.messAccount");
-
 	var regPhone = /^(1)\d{10}$/
 	var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,9})$/;
-	var phone = $("#inputPhone");
-	var email = $("#inputEmail");
+	// 这里的email，泛指账号，既可以是手机也可以是email
+	var email = $("input[name=email]");
 	var infoAccountOk = false;
 	var infoPassOk = false;
 	var infoRepassOk = false;
-	$("input.regAccount").bind("keyup blur", function() {
-		if (regMethod == "phone") {
-			// 手机注册
-			var phoneVal = phone.val().trim();
-			if (regPhone.test(phoneVal)) {
-				$(this).css({
-					"background-color" : "#D6D6FF"
-				});
-				messageAccount.html("");
-				infoAccountOk = true;
+	var regMethod = "";
+	$("input.account").bind("keyup blur", function() {
+		var accountVal = email.val();
+		if (regPhone.test(accountVal) || regEmail.test(accountVal)) {
+			$(this).css({
+				"background-color" : "#D6D6FF"
+			});
+			messageAccount.html("");
+			if (regPhone.test(accountVal)) {
+				regMethod = "phone";
 			} else {
-				messageAccount.html("手机号码格式不正确");
-				infoAccountOk = false;
+				regMethod = "email";
 			}
+			infoAccountOk = true;
 		} else {
-			// 邮箱注册
-			var emailVal = email.val();
-			if (regEmail.test(emailVal)) {
-				$(this).css({
-					"background-color" : "#D6D6FF"
-				});
-				messageAccount.html("");
-				infoAccountOk = true;
-			} else {
-				messageAccount.html("邮箱格式不正确");
-				infoAccountOk = false;
-			}
+			messageAccount.html("账号格式不正确");
+			infoAccountOk = false;
 		}
-
+		// alert(infoAccountOk);
 	});
 	var messagePass = $("label.messPass");
 	var messRepass = $("label.messRepass");
@@ -122,34 +85,22 @@ $(function() {
 		}
 
 	});
-
-	$("#loginForm").bind('keypress', function(event) {
-		if (event.keyCode == "13") {
-			login();
-		}
-	});
-	// 登录方法
-	$("#login").click(function() {
-		login();
-	});
-
-	// 注册验证码，验证码发送至手机或邮箱
+	// 改密验证码，验证码发送至手机或邮箱
 	var regData = "";
 	$("#getValidateCode")
 			.click(
 					function() {
-
 						if (infoAccountOk) {
 							if (regMethod == "phone") {
 								// 手机验证
-								var phoneNum = phone.val();
+								var phoneNum = email.val();
 								regData = "phone=" + phoneNum
-										+ "&reason=register";
+										+ "&reason=changePass";
 							} else {
 								// 邮箱验证
 								var emailVal = email.val();
 								regData = "email=" + emailVal
-										+ "&reason=register";
+										+ "&reason=changePass";
 							}
 
 							$
@@ -161,9 +112,8 @@ $(function() {
 										async : false,
 										contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 										success : function(result) {
-											// alert(result.success);
+											var obj = $("input[name=validateCode]");
 											if (result.success) {
-												var obj = $("input[name=validateCode]");
 												obj.removeAttr("disabled");
 												var second = 60;
 												setInterval(
@@ -195,7 +145,8 @@ $(function() {
 		$(this).html("");
 		$("label.messVali").html("");
 	});
-	$("#registerBtn")
+
+	$("#changePassBtn")
 			.click(
 					function() {
 						// 信息填写完毕
@@ -209,7 +160,7 @@ $(function() {
 								var data = "";
 								if (regMethod == "phone") {
 									// 手机验证
-									var phoneNum = phone.val();
+									var phoneNum = email.val();
 									data = "phone=" + phoneNum + "&password="
 											+ password + "&valiCode="
 											+ valiValue;
@@ -222,19 +173,20 @@ $(function() {
 								}
 								$
 										.ajax({
-											url : ctx + "/userAccount/register",
+											url : ctx
+													+ "/userAccount/doChangePass",
 											data : data,
 											type : 'POST',
 											async : false,
 											contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 											success : function(result) {
 												if (result.success) {
-													alert("注册成功");
+													alert("修改密码成功");
 													window.location.href = ctx
-															+ "/userInfo/editMainInfo";
+															+ "/common/index";
 												} else {
 													if (result.message) {
-														alert("注册失败"
+														alert("修改密码失败"
 																+ result.message.resultMess);
 													}
 												}
@@ -246,23 +198,4 @@ $(function() {
 							alert("信息填写不完全");
 						}
 					});
-
 });
-login = function() {
-	var data = "email=" + $("#loginForm #email").val() + "&password="
-			+ $("#loginForm #loginPassword").val();
-	$.ajax({
-		type : 'POST',
-		async : false,
-		url : ctx + "/userAccount/loginCheck",
-		data : data,
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		success : function(result) {
-			if (result.success) {
-				window.location.href = ctx + "/common/index";
-			} else {
-				$("#loginError").html(result.message.failDetail);
-			}
-		}
-	});
-}

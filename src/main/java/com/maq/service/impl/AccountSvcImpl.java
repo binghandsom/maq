@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.maq.base.utils.AliDayuSMSUtil;
@@ -24,7 +25,17 @@ public class AccountSvcImpl implements AccountSvc {
 	@Autowired
 	private AccountDao accountDao;
 	private Query query;
-	private Map<String, Object[]> valiCodeTimeMap;
+	private Map<String, Object[]> valiCodeTimeMap;// 记录验证码和验证码的产生时间
+	private Map<String, Object[]> loginFailMap;// 记录登陆失败时间和登陆次数，如果一天内登陆连续失败4次，禁止登陆
+	private Map<String, Long> lockedAccountMap;// 记录被锁定的账号和锁定 的时间
+	public final static String DO_REGISTER_ACCOUNT = "register";
+	public final static String DO_CHANGE_PASS = "changePass";
+
+	// 构造函数初始化Map，避免空指针
+	public AccountSvcImpl() {
+		loginFailMap = new HashMap<String, Object[]>();
+		lockedAccountMap = new HashMap<String, Long>();
+	}
 
 	public void add(Account account) {
 		accountDao.save(account);
@@ -32,7 +43,11 @@ public class AccountSvcImpl implements AccountSvc {
 
 	public ResponseMessage loginCheck(Account account, HttpSession session) {
 		ResponseMessage rm = new ResponseMessage();
+		// 存放消息 消息名》》消息内容
 		Map<String, String> rmMap = new HashMap<String, String>();
+		/**
+		 * 注意这里的email不是表面上的email,他可以是email或者phone
+		 */
 		String email;
 		String password;
 		try {
@@ -46,6 +61,20 @@ public class AccountSvcImpl implements AccountSvc {
 		if (email == null || password == null || "".equals(email) || "".equals(password)) {
 			rm.setSuccess(false);
 			return rm;
+		}
+		// 如果账号处于锁定期不继续进行验证密码
+		if (lockedAccountMap.containsKey(email)) {
+			long lockTime = lockedAccountMap.get(email);
+			long temp = System.currentTimeMillis() - lockTime;
+			if (temp < 60 * 1000 * 24) {
+				rm.setSuccess(false);
+				rmMap.put("failDetail", "您可以重置密码。该账号" + (24 * 60 - temp / (1000 * 60)) + "分钟后解除锁定。");
+				rm.setMessage(rmMap);
+				return rm;
+			} else {
+				// 时间到，解除锁定
+				lockedAccountMap.remove(email);
+			}
 		}
 		// 转化为md5字符串
 		password = MD5Util.GetMD5Code(password);
@@ -61,22 +90,42 @@ public class AccountSvcImpl implements AccountSvc {
 			// 将用户信息保存至session
 			session.setAttribute("userAccount", account2);
 			rm.setSuccess(true);
-			rm.setMessage(rmMap);
+		} else {
+			int failTimes = 1;
+			// 密码不正确，、
+			rmMap.put("failDetail", "账号密码不正确，该账号今天剩余3次登陆尝试机会");
+			if (loginFailMap.containsKey(email)) {
+				Object[] failTimesAndTime = loginFailMap.get(email);
+				failTimes = Integer.parseInt(failTimesAndTime[0].toString());
+				if (failTimes < 4) {
+					// 还可以继续尝试输入密码
+					failTimes += 1;
+					rmMap.put("failDetail", "账号密码不正确，该账号今天剩余" + (4 - failTimes) + "次登陆尝试机会");
+				} else {
+					// 锁定账号，用户必须使用手机或者邮箱重置密码
+					lockedAccountMap.put(email, System.currentTimeMillis());
+					rmMap.put("failDetail", "该账号被锁定一天，你可以使用手机或者邮箱重置密码");
+				}
+			}
+			Object[] failTimesAndTime = new Object[] { failTimes, System.currentTimeMillis() };// 失败次数和失败的时间
+			// 将失败的时间和失败的次数保存进loginFailMap中
+			loginFailMap.put(email, failTimesAndTime);
 		}
+		rm.setMessage(rmMap);
 		return rm;
 	}
 
-	public ResponseMessage sendValidateCode(String phone, String email, String reason, HttpSession session) {
+	public ResponseMessage sendValidateCode(Account account, String reason, HttpSession session) {
 		ResponseMessage message = new ResponseMessage();
 		// 存放某手机或邮箱的验证码和验证码产生的毫秒数 object[0] 验证码，object[1]时间
 		valiCodeTimeMap = (Map<String, Object[]>) session.getAttribute("valiCodeTimeMap");
-		Map<String, String> messageMap = new HashMap<String, String>();
-		if (valiCodeTimeMap == null) {
-			valiCodeTimeMap = new HashMap<String, Object[]>();
-		}
+		// 保存失败详细信息的map
+		Map<String, String> failMap = new HashMap<String, String>();
 		// 在发送完验证码后将验证码保存在session中，
 		Object[] preValiCodeAndTime = new Object[2];
 		String validateCode = "";
+		String phone = account.getPhone();
+		String email = account.getEmail();
 		if (phone != null) {
 			String regRule = "^[1][0-9]{10}$";
 			Pattern p = Pattern.compile(regRule);
@@ -84,7 +133,13 @@ public class AccountSvcImpl implements AccountSvc {
 			if (!m.matches()) {
 				// 如果手机号码格式不正确
 				message.setSuccess(false);
+				// 可以在message中增加信息，这样前端页面反馈给用户不一样的信息，增强用户体验
+				failMap.put("failReason", "手机格式不正确");
+				message.setMessage(failMap);
 				return message;
+			}
+			if (valiCodeTimeMap == null) {
+				valiCodeTimeMap = new HashMap<String, Object[]>();
 			}
 			if (valiCodeTimeMap.containsKey(phone)) {
 				// 获取该entry的value
@@ -96,6 +151,8 @@ public class AccountSvcImpl implements AccountSvc {
 						// 让请求失败
 						message.setSuccess(false);
 						// 可以在message中增加信息，这样前端页面反馈给用户不一样的信息，增强用户体验
+						failMap.put("failReason", "验证码过期，请重新获取");
+						message.setMessage(failMap);
 						return message;
 					}
 				}
@@ -106,6 +163,14 @@ public class AccountSvcImpl implements AccountSvc {
 				/**
 				 * 产生验证码并发送
 				 */
+				// 注册账号操作，如果已经存在这样的账号，则不让继续注册，也不发验证码
+				if (accountDao.isUsed(account)) {
+					message.setSuccess(false);
+					// 可以在message中增加信息，这样前端页面反馈给用户不一样的信息，增强用户体验
+					failMap.put("failReason", "该账号已被注册，忘记密码？您可以重置密码");
+					message.setMessage(failMap);
+					return message;
+				}
 				validateCode = AliDayuSMSUtil.sendAliDayuMSG(phone, AliDayuSMSUtil.SIGNNAME_REG);
 
 			} else if ("changePass".equals(reason)) {
@@ -113,6 +178,14 @@ public class AccountSvcImpl implements AccountSvc {
 				/**
 				 * 产生验证码并发送
 				 */
+				// 修改密码操作,如果不存在这样的账号，肯定不让修改密码,所以没必要发送改密验证码
+				if (!accountDao.isUsed(account)) {
+					message.setSuccess(false);
+					// 可以在message中增加信息，这样前端页面反馈给用户不一样的信息，增强用户体验
+					failMap.put("failReason", "不存在这样的账号，请检查账号是否填写正确（注册时用的手机号或者邮箱号）");
+					message.setMessage(failMap);
+					return message;
+				}
 				validateCode = AliDayuSMSUtil.sendAliDayuMSG(phone, AliDayuSMSUtil.SIGNNAME_CHANGE_PASSWORD);
 			}
 
@@ -175,12 +248,18 @@ public class AccountSvcImpl implements AccountSvc {
 		return rm;
 	}
 
-	public Object[] accountAvailable(Account account, HttpSession session, String valiCode) {
+	public Object[] accountAvailable(Account account, HttpSession session, String valiCode, String doWhat) {
 		// 如果此账号已经被注册过，不予注册
 		// 判断账号可用不可用是根据session中是否有改账号来决定，因为注册前获取验证码成功后将账号放到了session中，如果session中没有此账号，则不予注册
 		// 如果session中有那个账号，再验证验证码是否一致。两者一致才继续注册。否则不予注册
 		// 判断验证码是否过期，过期不予注册
 
+		if (DO_CHANGE_PASS.equals(doWhat)) {
+			// 修改密码操作,如果不存在这样的账号，肯定不让修改密码
+			if (!accountDao.isUsed(account)) {
+				return new Object[] { false, "不存在这样的账号" };
+			}
+		}
 		if (valiCodeTimeMap == null || valiCodeTimeMap.size() == 0) {
 			return new Object[] { false, "未获取验证码" };
 		} else {
@@ -209,10 +288,46 @@ public class AccountSvcImpl implements AccountSvc {
 				}
 			}
 		}
-		if (accountDao.isUsed(account)) {
-			// 存在,号码、邮箱已经被注册过
-			return new Object[] { false, "该账号已经被注册过，不允许再注册" };
-		}
 		return new Object[] { false, "验证码不正确" };
 	}
+
+	public ResponseMessage changePass(Account account, HttpSession session) {
+		// 因为在之前验证码时已经进行过账号验证，所以此处不必进行账号验证
+		// 但需要进行密码格式验证
+		String email = account.getEmail();
+		String phone = account.getPhone();
+		ResponseMessage rm = new ResponseMessage();
+		Map<String, String> rmMap = new HashMap<String, String>();
+		String regRule = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^0-9a-zA-Z]).{6,40}";
+		Pattern p = Pattern.compile(regRule);
+		String password = account.getPassword();
+		Matcher m = p.matcher(password);
+		if (!m.matches()) {
+			// 如果密码格式错误
+			rm.setSuccess(false);
+			rmMap.put("resultMess", "密码格式不正确，应该为数字、英文、特殊字符（如：* ！等）的组合");
+			rm.setMessage(rmMap);
+			return rm;
+		}
+		Update update = new Update();
+		// 将密码MD5加密
+		update.set("password", MD5Util.GetMD5Code(password));
+		query = new Query(Criteria.where("email").is(email).orOperator(Criteria.where("phone").is(phone)));
+		try {
+			accountDao.updateFirst(query, update);
+			rm.setSuccess(true);
+			return rm;
+		} catch (Exception e) {
+			rm.setSuccess(false);
+			rmMap.put("resultMess", "未知错误，修改密码失败");
+			rm.setMessage(rmMap);
+			return rm;
+		}
+	}
+
+	public ResponseMessage sendValidateCode(String phoneNum, String email, String reason, HttpSession session) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

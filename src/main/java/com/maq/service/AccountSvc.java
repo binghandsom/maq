@@ -10,9 +10,11 @@ public interface AccountSvc {
 
 	ResponseMessage loginCheck(Account account, HttpSession session);
 
-	ResponseMessage sendValidateCode(String phoneNum, String email, String reason, HttpSession session);
+	ResponseMessage sendValidateCode(Account account, String reason, HttpSession session);
 
 	ResponseMessage register(Account account, HttpSession session);
 
-	Object[] accountAvailable(Account account, HttpSession session, String valiCode);
+	Object[] accountAvailable(Account account, HttpSession session, String valiCode, String doWhat);
+
+	ResponseMessage changePass(Account account, HttpSession session);
 }

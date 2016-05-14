@@ -36,7 +36,7 @@
 			</div>
 			<input type="checkbox" name="remem" id="remem" value="false" /><span
 				style="color: darkgray;">下次自动登陆</span> &nbsp;&nbsp;&nbsp; <a
-				href="#">忘记密码？</a> <label id="loginError"
+				href="${ ctx}/userAccount/changePass">重置密码？</a> <label id="loginError"
 				style="display: inline; color: red;"></label>
 		</div>
 	</div>

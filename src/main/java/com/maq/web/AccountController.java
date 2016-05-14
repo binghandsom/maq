@@ -17,6 +17,7 @@ import com.maq.base.utils.dto.ResponseMessage;
 import com.maq.bean.Account;
 import com.maq.service.AccountSvc;
 import com.maq.service.UserSvc;
+import com.maq.service.impl.AccountSvcImpl;
 
 @Controller
 @RequestMapping("userAccount")
@@ -36,7 +37,8 @@ public class AccountController {
 	public ResponseMessage register(Account account, String valiCode, HttpSession session, Model model) {
 		ResponseMessage rm = new ResponseMessage();
 		Map<String, String> msgMap = new HashMap<String, String>();
-		Object[] availableArr = accountSvc.accountAvailable(account, session, valiCode);
+		Object[] availableArr = accountSvc.accountAvailable(account, session, valiCode,
+				AccountSvcImpl.DO_REGISTER_ACCOUNT);
 		if (!(Boolean) availableArr[0]) {
 			// 如果账号不可用,或者验证码出现问题
 			rm.setSuccess(false);
@@ -44,6 +46,25 @@ public class AccountController {
 			rm.setMessage(msgMap);
 		} else {
 			rm = accountSvc.register(account, session);
+		}
+		System.out.println(account.toString() + valiCode);
+
+		return rm;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "doChangePass", method = RequestMethod.POST)
+	public ResponseMessage doChangePass(Account account, String valiCode, HttpSession session) {
+		ResponseMessage rm = new ResponseMessage();
+		Map<String, String> msgMap = new HashMap<String, String>();
+		Object[] availableArr = accountSvc.accountAvailable(account, session, valiCode, AccountSvcImpl.DO_CHANGE_PASS);
+		if (!(Boolean) availableArr[0]) {
+			// 如果账号不存在,或者验证码出现问题
+			rm.setSuccess(false);
+			msgMap.put("resultMess", availableArr[1].toString());
+			rm.setMessage(msgMap);
+		} else {
+			rm = accountSvc.changePass(account, session);
 		}
 		System.out.println(account.toString() + valiCode);
 
@@ -72,11 +93,16 @@ public class AccountController {
 	 */
 	@RequestMapping(value = "sendRegValidateCode", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseMessage sendValidateCode(String phone, String email, String reason, HttpSession session) {
-		System.out.println(phone);
-		ResponseMessage rm = accountSvc.sendValidateCode(phone, email, reason, session);
+	public ResponseMessage sendValidateCode(Account account, String reason, HttpSession session) {
+		// System.out.println(phone);
+		ResponseMessage rm = accountSvc.sendValidateCode(account, reason, session);
 		System.out.println(rm);
 		return rm;
+	}
+
+	@RequestMapping("changePass")
+	public String changePass() {
+		return "userAccount/changePass";
 	}
 
 }

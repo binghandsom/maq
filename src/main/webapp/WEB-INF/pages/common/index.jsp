@@ -101,7 +101,7 @@
 					<div class="row personCell" style="margin-top: 10px;">
 						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
 							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/HBuilder.png" alt="...">
+								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
 							</a>
 						</div>
 
@@ -126,7 +126,7 @@
 					<div class="row personCell" style="margin-top: 10px;">
 						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
 							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/HBuilder.png" alt="...">
+								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
 							</a>
 						</div>
 
@@ -151,7 +151,7 @@
 					<div class="row personCell" style="margin-top: 10px;">
 						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
 							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/HBuilder.png" alt="...">
+								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
 							</a>
 						</div>
 
@@ -176,7 +176,7 @@
 					<div class="row personCell" style="margin-top: 10px;">
 						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
 							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/HBuilder.png" alt="...">
+								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
 							</a>
 						</div>
 
@@ -201,7 +201,7 @@
 					<div class="row personCell" style="margin-top: 10px;">
 						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
 							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/HBuilder.png" alt="...">
+								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
 							</a>
 						</div>
 
@@ -226,7 +226,7 @@
 					<div class="row personCell" style="margin-top: 10px;">
 						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
 							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/HBuilder.png" alt="...">
+								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
 							</a>
 						</div>
 
