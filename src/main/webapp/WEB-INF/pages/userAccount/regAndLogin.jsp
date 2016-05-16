@@ -36,8 +36,8 @@
 			</div>
 			<input type="checkbox" name="remem" id="remem" value="false" /><span
 				style="color: darkgray;">下次自动登陆</span> &nbsp;&nbsp;&nbsp; <a
-				href="${ ctx}/userAccount/changePass">重置密码？</a> <label id="loginError"
-				style="display: inline; color: red;"></label>
+				href="${ ctx}/userAccount/changePass">重置密码？</a> <label
+				id="loginError" style="display: inline; color: red;"></label>
 		</div>
 	</div>
 	<div class="row ">
@@ -47,10 +47,6 @@
 				style="z-index: 1; position: absolute; width: 300px; right: 180px; background: grey; opacity: 0.8; margin-top: 80px; padding: 15px 15px;">
 				<div class="form-signin" id="regForm">
 					<h2 class="form-signin-heading" style="color: wheat;">注册账号</h2>
-					<span class="radio" id="genderInput"> <label><input
-							type="radio" name="gender" id="" value="0" checked> 女 </label> <label><input
-							type="radio" name="gender" id="1" value="option2"> 男 </label>
-					</span>
 
 					<div id="whichWayReg">
 						<label><span>选择何种注册方式</span> <span

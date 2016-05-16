@@ -23,9 +23,11 @@ public class DateUtils {
 	 */
 	public static final String DATESTR_FORMATTER_GA = "yyyyMMddHHmmss";
 	public static final String DEFSBDATE_FORMATE_STR = "yyyyMMdd";
-	//add for uedit
-	private static String[] formatters = new String[] { "yyyyMMddHHmmss",
-		"yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm","yyyy-MM-dd","yyyy年MM月dd日","yyyyMMdd" };
+	public static final String CH_DATE_FORMATE_STR = "yyyy年MM月dd日";
+
+	// add for uedit
+	private static String[] formatters = new String[] { "yyyyMMddHHmmss", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm",
+			"yyyy-MM-dd", "yyyy年MM月dd日", "yyyyMMdd" };
 
 	/**
 	 * 图表中的日期格式，格式为“yyyy年MM月dd日”
@@ -111,8 +113,7 @@ public class DateUtils {
 	 * @return
 	 */
 	public static Date getNextMonthFirstDay(String year, String month) {
-		if (year == null || "".equals(year) || month == null
-				|| "".equals(month))
+		if (year == null || "".equals(year) || month == null || "".equals(month))
 			return null;
 		Date nd = stringToDate(year + "-" + month + "-01");
 		return addMonth(nd, 1);
@@ -126,8 +127,7 @@ public class DateUtils {
 	 * @return
 	 */
 	public static Date getMonthLastDay(String year, String month) {
-		if (year == null || "".equals(year) || month == null
-				|| "".equals(month))
+		if (year == null || "".equals(year) || month == null || "".equals(month))
 			return null;
 		Date nd = stringToDate(year + "-" + month + "-01");
 		return addDay(addMonth(nd, 1), -1);
@@ -257,8 +257,7 @@ public class DateUtils {
 	 * @return
 	 */
 	public static int compareMonth(Date st, Date end) {
-		int y = Math.abs((getYear(end) < 0 ? 0 : getYear(end))
-				- (getYear(st) < 0 ? 0 : getYear(st)));
+		int y = Math.abs((getYear(end) < 0 ? 0 : getYear(end)) - (getYear(st) < 0 ? 0 : getYear(st)));
 		int m = 0;
 		if (y > 0) {
 			y--;
@@ -336,8 +335,7 @@ public class DateUtils {
 	 * @lastModified
 	 * @history
 	 */
-	public static String formatDateStr(String strDate, String sourceFormat,
-			String targetFormate) {
+	public static String formatDateStr(String strDate, String sourceFormat, String targetFormate) {
 		Date date = strToDate(strDate, sourceFormat);
 		return doFormatDate(date, targetFormate);
 	}
@@ -594,8 +592,7 @@ public class DateUtils {
 	 * 产生文件函数名，以当然日期+4位随机码为主
 	 */
 	public static String getDataName() {
-		return DateUtils.doFormatDate(new Date(), "yyyyMMddHHmmss")
-				+ getRandNum(4);
+		return DateUtils.doFormatDate(new Date(), "yyyyMMddHHmmss") + getRandNum(4);
 	}
 
 	/**
@@ -619,11 +616,9 @@ public class DateUtils {
 	 * @return dataTime timestamp
 	 */
 	@SuppressWarnings("static-access")
-	public static Timestamp string2Time(String dateString)
-			throws java.text.ParseException {
+	public static Timestamp string2Time(String dateString) throws java.text.ParseException {
 		DateFormat dateFormat;
-		dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss.SSS",
-				Locale.ENGLISH);// 设定格式
+		dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss.SSS", Locale.ENGLISH);// 设定格式
 		// dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss",
 		// Locale.ENGLISH);
 		dateFormat.setLenient(false);
@@ -665,8 +660,7 @@ public class DateUtils {
 	 */
 	public static Date strTdate(String datestr) {
 		if (datestr != null && !"".equals(datestr)) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-					Locale.CHINA);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
 			Date date = null;
 			try {
 				date = sdf.parse(datestr);
@@ -752,12 +746,9 @@ public class DateUtils {
 			return time;
 		} else {
 			StringBuilder str = new StringBuilder();
-			str.append(time.substring(0, 4)).append("-")
-					.append(time.substring(4, 6)).append("-")
-					.append(time.substring(6, 8)).append(" ")
-					.append(time.substring(8, 10)).append(":")
-					.append(time.substring(10, 12)).append(":")
-					.append(time.substring(12, 14));
+			str.append(time.substring(0, 4)).append("-").append(time.substring(4, 6)).append("-")
+					.append(time.substring(6, 8)).append(" ").append(time.substring(8, 10)).append(":")
+					.append(time.substring(10, 12)).append(":").append(time.substring(12, 14));
 			return str.toString();
 		}
 	}
@@ -778,8 +769,7 @@ public class DateUtils {
 			return time;
 		} else if (time.length() == 14 || time.length() == 8) {
 			StringBuilder str = new StringBuilder();
-			str.append(time.substring(0, 4)).append("-")
-					.append(time.substring(4, 6)).append("-")
+			str.append(time.substring(0, 4)).append("-").append(time.substring(4, 6)).append("-")
 					.append(time.substring(6, 8));
 			return str.toString();
 		} else {
@@ -803,10 +793,8 @@ public class DateUtils {
 			return time;
 		} else if (time.length() == 14 || time.length() == 8) {
 			StringBuilder str = new StringBuilder();
-			str.append(time.substring(0, 4)).append("-")
-					.append(time.substring(4, 6)).append("-")
-					.append(time.substring(6, 8)).append(" ")
-					.append(time.substring(8, 10)).append(":")
+			str.append(time.substring(0, 4)).append("-").append(time.substring(4, 6)).append("-")
+					.append(time.substring(6, 8)).append(" ").append(time.substring(8, 10)).append(":")
 					.append(time.substring(10, 12));
 			return str.toString();
 		} else {
@@ -862,7 +850,6 @@ public class DateUtils {
 		return getYear() + "01" + "01";
 	}
 
-
 	/**
 	 * 
 	 * 获取查询的默认操作时间结束时间，本年度当天
@@ -876,7 +863,7 @@ public class DateUtils {
 	public static String getDefSbJsDateStr() {
 		return doFormatDate(new Date(), DEFSBDATE_FORMATE_STR);
 	}
-	
+
 	/**
 	 * 根据源时间字符串和相应的格式化类型获取目标时间字符串
 	 * 
@@ -892,16 +879,15 @@ public class DateUtils {
 	 * @lastModified
 	 * @history
 	 */
-	
-	public static String getFormatStringByFormatString(String srcString,
-			int srcFormatType, int desFormatType) {
+
+	public static String getFormatStringByFormatString(String srcString, int srcFormatType, int desFormatType) {
 		if (StringUtils.isBlank(srcString)) {
 			return StringUtils.EMPTY;
 		}
 		Date d = getDateTimeByFormat(srcString, srcFormatType);
 		return doFormatDateByFormat11(d, desFormatType);
 	}
-	
+
 	/**
 	 * 根据格式化字符串格式化 字符串为时间
 	 * 
@@ -922,7 +908,7 @@ public class DateUtils {
 		String formatter = formatters[formatType];
 		return strToDate(dateString, formatter);
 	}
-	
+
 	/**
 	 * 根据格式化字符串格式化 将日期转换成字符串形式
 	 * 

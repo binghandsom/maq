@@ -1,8 +1,8 @@
 package com.maq.service;
 
-import com.maq.bean.UserInfo;
+import com.maq.bean.UserMainInfo;
 
 public interface UserSvc {
 
-	public UserInfo getByName(String username);
+	public UserMainInfo getByName(String username);
 }

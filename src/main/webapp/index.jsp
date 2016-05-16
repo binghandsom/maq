@@ -1,4 +1,4 @@
-<%response.sendRedirect(request.getContextPath()+"/login");%>
+<%response.sendRedirect(request.getContextPath()+"/userMainInfo/editMainInfo");%>
 <!-- <html>
 <body>
 <h2>Hello World!</h2>
