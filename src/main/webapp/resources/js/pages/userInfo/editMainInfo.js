@@ -70,6 +70,7 @@ $(function() {
 				var constellation = getConstellation(month, date);
 				$("#constellation").val(constellation);
 				$("#constellationShow").html(constellation);
+				$(".messBirthDay").html("");
 			});
 
 	$("#radio").buttonset();
@@ -115,7 +116,11 @@ $(function() {
 	$("#choosePicBtn").click(function() {
 		$("#headPicFile").click();
 	});
-
+	$(".submit>button").click(function() {
+		// alert($(this).attr("goWhere"));
+		$("#goWhere").val($(this).attr("goWhere"));
+		$("form").submit();
+	});
 });
 
 function fileUpload_onselect() {
@@ -190,7 +195,7 @@ function checkForm() {
 		}).html("生日为必填信息");
 		return false;
 	}
-	alert($("#headPicOk").val());
+	// alert($("#headPicOk").val());
 	if ($("#headPicOk").val() + "" == "false") {
 		$("label.messHeadPic").css({
 			"color" : "red"

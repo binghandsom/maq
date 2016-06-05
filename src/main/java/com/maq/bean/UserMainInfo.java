@@ -1,7 +1,7 @@
 package com.maq.bean;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
@@ -17,7 +17,8 @@ public class UserMainInfo {
 	private String id;// 用户id
 	/** 昵称 */
 	private String nickName;
-	private String headPicPath;// 头像图片路径名、
+	private String headPic;// 头像图片名、包含id和时间 作为展示用
+	private List<String> headPicList;// 头像图片列表
 	/** 创建时间 */
 	private Date createDate;
 	private Date birthDay;// 生日
@@ -103,12 +104,12 @@ public class UserMainInfo {
 		this.salary = salary;
 	}
 
-	public String getHeadPicPath() {
-		return headPicPath;
+	public String getHeadPic() {
+		return headPic;
 	}
 
-	public void setHeadPicPath(String headPicPath) {
-		this.headPicPath = headPicPath;
+	public void setHeadPic(String headPic) {
+		this.headPic = headPic;
 	}
 
 	public int getMarriage() {
@@ -125,6 +126,14 @@ public class UserMainInfo {
 
 	public void setConstellation(String constellation) {
 		this.constellation = constellation;
+	}
+
+	public List<String> getHeadPicList() {
+		return headPicList;
+	}
+
+	public void setHeadPicList(List<String> headPicList) {
+		this.headPicList = headPicList;
 	}
 
 	@Override
@@ -154,10 +163,10 @@ public class UserMainInfo {
 
 	@Override
 	public String toString() {
-		return "UserInfo [id=" + id + ", nickName=" + nickName + ", headPicPath=" + headPicPath + ", createDate="
-				+ createDate + ", birthDay=" + birthDay + ", lastLoginDate=" + lastLoginDate + ", gender=" + gender
-				+ ", height=" + height + ", salary=" + salary + ", marriage=" + marriage + ", constellation="
-				+ constellation + ", declaration=" + declaration + "]";
+		return "UserMainInfo [id=" + id + ", nickName=" + nickName + ", headPic=" + headPic + ", headPicList="
+				+ headPicList + ", createDate=" + createDate + ", birthDay=" + birthDay + ", lastLoginDate="
+				+ lastLoginDate + ", gender=" + gender + ", height=" + height + ", salary=" + salary + ", marriage="
+				+ marriage + ", constellation=" + constellation + ", declaration=" + declaration + "]";
 	}
 
 }

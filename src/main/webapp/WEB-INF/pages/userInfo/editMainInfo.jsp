@@ -38,7 +38,7 @@
 		<div class="container">
 			<div class="col-lg-6 col-md-6 col-sm-6 " style="padding-left: 200px;">
 				<label>昵称</label> <input name="nickName" value="" placeholder=""><label
-					class="messNickName">ddd</label>
+					class="messNickName"></label>
 				<hr />
 				<label>性别</label> <span class="radio" id="genderInput"> <label><input
 						type="radio" name="gender" value="0" checked> 女 </label> <label><input
@@ -47,9 +47,10 @@
 				<hr />
 				<label>生日</label> <input type="text" placeholder="点击图标选择日期"
 					id="birthDaypicker" name="birthDay" readonly="readonly"
-					style="width: 120px; z-index: 10;"> &nbsp;&nbsp;&nbsp; <label>星座</label><label
-					class="messBirthDay"></label> <span id="constellationShow"></span>
-				<input type="hidden" name="constellation" id="constellation" />
+					style="width: 120px; z-index: 10;"> <label
+					class="messBirthDay"></label>&nbsp;&nbsp;&nbsp; <label>星座</label> <span
+					id="constellationShow"></span> <input type="hidden"
+					name="constellation" id="constellation" />
 				<hr />
 				<label>婚姻经历</label>
 				<div id="radio" style="display: inline;">
@@ -86,9 +87,9 @@
 			</div>
 		</div>
 		<div class="submit" style="margin: 20 auto; width: 400px;">
-			<button type="submit" type="button" class="btn btn-warning">继续编辑个人详细信息</button>
-			<button type="submit" type="button" class="btn btn-success">详细信息
-				以后再写，先睹为快</button>
+			<input type="hidden" id="goWhere" name="goWhere">
+			<button type="button" goWhere="editDetailInfo" class="btn btn-warning">继续编辑个人详细信息</button>
+			<button type="button" goWhere="lookingLover" class="btn btn-success">详细信息以后再写，先睹为快</button>
 		</div>
 	</form>
 </body>

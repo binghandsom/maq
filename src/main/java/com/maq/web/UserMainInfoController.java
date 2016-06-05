@@ -6,12 +6,16 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.maq.base.utils.DateUtils;
 import com.maq.base.utils.ImageUtil;
+import com.maq.base.utils.PropertiesUtil;
 import com.maq.base.utils.dto.ResponseMessage;
 import com.maq.bean.Account;
 import com.maq.bean.UserMainInfo;
@@ -60,8 +65,8 @@ public class UserMainInfoController {
 			throws IOException {
 		String fileAbsolutePath = "";
 		if (ImageUtil.TEMP_PICTURE.equals(picType)) {
-			fileAbsolutePath = request.getSession().getServletContext()
-					.getRealPath("files/picture/userHeadPictures_temp") + "/" + picName;
+			fileAbsolutePath = PropertiesUtil.getPropertyValue("config/properties/common.properties", "fileSystemRoot")
+					+ "/picture/userHeadPictures_temp/" + picName;
 			System.out.println(fileAbsolutePath);
 		} else if (ImageUtil.HEAD_PICTURE.equals(picType)) {
 			fileAbsolutePath = request.getSession().getServletContext().getRealPath("userHeadPictures") + "/" + picName;
@@ -71,12 +76,29 @@ public class UserMainInfoController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "isPictureFiles", method = RequestMethod.POST)
+	public ResponseMessage isPictureFiles(@RequestParam(value = "photoFiles", required = true) MultipartFile[] photoFiles,
+			HttpSession session) {
+		System.out.println(photoFiles.toString());
+		ResponseMessage rm = new ResponseMessage();
+		Map<String, String> okMap = new HashMap<String, String>();
+		okMap.put("picName", "xxxx");
+		rm.setMessage(okMap);
+		rm.setSuccess(true);
+		return rm;
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "isPictureFile", method = RequestMethod.POST)
 	public ResponseMessage isPictureFile(@RequestParam(value = "headPic", required = true) MultipartFile headPic,
 			HttpSession session) {
 		ResponseMessage rm = new ResponseMessage();
 		Map<String, String> failReason = new HashMap<String, String>();
-		String path = session.getServletContext().getRealPath("files/picture/userHeadPictures_temp");
+		// String path =
+		// session.getServletContext().getRealPath("files/picture/userHeadPictures_temp");
+		String path = PropertiesUtil.getPropertyValue("config/properties/common.properties", "fileSystemRoot")
+				+ "/picture/userHeadPictures_temp";
+
 		Account account = new Account();
 		account.setId("xxx");
 		session.setAttribute("account", account);
@@ -107,9 +129,9 @@ public class UserMainInfoController {
 			rm.setSuccess(false);
 			failReason.put("reason", "不是图片文件");
 			rm.setMessage(failReason);
-		} else if (targetFile.length() > 6 * 1024 * 1024) {
+		} else if (targetFile.length() > 8 * 1024 * 1024) {
 			rm.setSuccess(false);
-			failReason.put("reason", "图片文件大小不可超过6Mb，请检查");
+			failReason.put("reason", "图片文件大小不可超过8Mb，请检查");
 			rm.setMessage(failReason);
 		} else {
 			Map<String, String> okMap = new HashMap<String, String>();
@@ -123,7 +145,7 @@ public class UserMainInfoController {
 
 	@RequestMapping(value = "doEditMainInfo", method = RequestMethod.POST)
 	public String doEditMainInfo(HttpSession session, ModelMap modelM, String birthDay, String constellation,
-			String nickName, int gender, int marriage, String declaration, int height, int salary) {
+			String nickName, int gender, int marriage, String declaration, int height, int salary, String goWhere) {
 		String headPicPath = session.getAttribute("headPicPath").toString();
 		File headPic = new File(headPicPath);
 		UserMainInfo baseInfo = new UserMainInfo();
@@ -139,8 +161,8 @@ public class UserMainInfoController {
 		baseInfo.setSalary(salary);
 
 		System.out.println(baseInfo);
-
-		String path = session.getServletContext().getRealPath("files/picture/userHeadPictures");
+		String path = PropertiesUtil.getPropertyValue("config/properties/common.properties", "fileSystemRoot")
+				+ "/picture/userHeadPictures";
 		Account account = new Account();
 		account.setId("xxx");
 		session.setAttribute("account", account);
@@ -160,15 +182,21 @@ public class UserMainInfoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		baseInfo.setHeadPicPath(path + File.separator + fileName);
+		baseInfo.setHeadPic(fileName);
 
 		umiSvc.save(baseInfo);
-
-		return "userInfo/editMainInfo";
+		if ("editDetailInfo".equals(goWhere)) {
+			return "userInfo/editDetailInfo";
+		} else if ("lookingLover".equals(goWhere)) {
+			return "common/index";
+		}
+		// 未知情形，异常
+		return "userAccount/regAndLogin";
 	}
 
 	@RequestMapping("editDetailInfo")
 	public String editDetailInfo() {
+
 		// 编辑详细信息
 		return "userInfo/editDetailInfo";
 	}
