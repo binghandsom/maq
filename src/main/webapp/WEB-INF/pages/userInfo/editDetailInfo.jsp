@@ -34,7 +34,8 @@
 						class="list-group-item list-group-item-warning">工作情况</a> <a
 						href="${ctx }/detailInfos/editLoveAttitude" target="contentFrame"
 						class="list-group-item list-group-item-warning">恋爱态度</a> <a
-						href="${ctx }/detailInfos/editMatingPreference" target="contentFrame"
+						href="${ctx }/detailInfos/editMatingPreference"
+						target="contentFrame"
 						class="list-group-item list-group-item-warning">择偶要求</a> <a
 						href="${ctx }/detailInfos/editPhotos" target="contentFrame"
 						class="list-group-item list-group-item-warning">我的相册</a>
@@ -50,10 +51,5 @@
 			</div>
 		</div>
 	</div>
-
-
-	<a href="${ctx}/userInfo/editDetailInfo">继续编辑个人详细信息</a>
-
-	<a href="${ ctx}/common/index">详细信息 以后再写，先睹为快</a>
 </body>
 </html>

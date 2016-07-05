@@ -87,8 +87,8 @@
 			</select>
 		</div>
 		<div>
-			<label class="section" for="WhetherAcceptDistance">是否接受异地</label> <select
-				name="WhetherAcceptDistance" id="WhetherAcceptDistance">
+			<label class="section" for="whetherAcceptDistance">是否接受异地</label> <select
+				name="whetherAcceptDistance" id="whetherAcceptDistance">
 				<option value="" selected="selected">请选择</option>
 				<option value="接受">接受</option>
 				<option value="不接受">不接受</option>
@@ -99,47 +99,46 @@
 	<label class="section" for="desiredEngagementWay">喜欢的约会方式</label>
 	<p id="desiredEngagementWay">
 		<span><input id="desiredEngagementWay_1"
-			name="desiredEngagementWay_1" type="checkbox" value="餐厅"><label
+			name="desired_engagement_way" type="checkbox" value="餐厅"><label
 			for="desiredEngagementWay_1">餐厅</label></span> <span><input
-			id="desiredEngagementWay_2" name="desiredEngagementWay_2"
+			id="desiredEngagementWay_2" name="desired_engagement_way"
 			type="checkbox" value="茶楼"><label
 			for="desiredEngagementWay_2">茶楼</label></span> <span><input
-			id="desiredEngagementWay_2" name="desiredEngagementWay_2"
+			id="desiredEngagementWay_3" name="desired_engagement_way"
 			type="checkbox" value="咖啡厅"><label
-			for="desiredEngagementWay_2">咖啡厅</label></span> <span><input
-			id="desiredEngagementWay_3" name="desiredEngagementWay_3"
+			for="desiredEngagementWay_3">咖啡厅</label></span> <span><input
+			id="desiredEngagementWay_4" name="desired_engagement_way"
 			type="checkbox" value="酒吧"><label
-			for="desiredEngagementWay_3">酒吧</label></span> <span><input
-			id="desiredEngagementWay_4" name="desiredEngagementWay_4"
+			for="desiredEngagementWay_4">酒吧</label></span> <span><input
+			id="desiredEngagementWay_5" name="desired_engagement_way"
 			type="checkbox" value="看电影"><label
-			for="desiredEngagementWay_4">看电影</label></span> <span><input
-			id="desiredEngagementWay_5" name="desiredEngagementWay_5"
+			for="desiredEngagementWay_5">看电影</label></span> <span><input
+			id="desiredEngagementWay_6" name="desired_engagement_way"
 			type="checkbox" value="看演出"><label
-			for="desiredEngagementWay_5">看演出</label></span> <span><input
-			id="desiredEngagementWay_6" name="desiredEngagementWay_6"
+			for="desiredEngagementWay_6">看演出</label></span> <span><input
+			id="desiredEngagementWay_7" name="desired_engagement_way"
 			type="checkbox" value="看展览"><label
-			for="desiredEngagementWay_6">看展览</label></span> <span><input
-			id="desiredEngagementWay_7" name="desiredEngagementWay_7"
+			for="desiredEngagementWay_7">看展览</label></span> <span><input
+			id="desiredEngagementWay_8" name="desired_engagement_way"
 			type="checkbox" value="逛街"><label
-			for="desiredEngagementWay_7">逛街</label></span> <span><input
-			id="desiredEngagementWay_8" name="desiredEngagementWay_8"
+			for="desiredEngagementWay_8">逛街</label></span> <span><input
+			id="desiredEngagementWay_9" name="desired_engagement_way"
 			type="checkbox" value="公园散步"><label
-			for="desiredEngagementWay_8">公园散步</label></span> <span><input
-			id="desiredEngagementWay_9" name="desiredEngagementWay_9"
+			for="desiredEngagementWay_9">公园散步</label></span> <span><input
+			id="desiredEngagementWay_10" name="desired_engagement_way"
 			type="checkbox" value="郊游"><label
-			for="desiredEngagementWay_9">郊游</label></span> <span><input
-			id="desiredEngagementWay_10" name="desiredEngagementWay_10"
+			for="desiredEngagementWay_10">郊游</label></span> <span><input
+			id="desiredEngagementWay_11" name="desired_engagement_way"
 			type="checkbox" value="户外运动"><label
-			for="desiredEngagementWay_10">户外运动</label></span> <span><input
-			id="desiredEngagementWay_11" name="desiredEngagementWay_11"
+			for="desiredEngagementWay_11">户外运动</label></span> <span><input
+			id="desiredEngagementWay_12" name="desired_engagement_way"
 			type="checkbox" value="其他"><label
-			for="desiredEngagementWay_11">其他</label></span>
+			for="desiredEngagementWay_12">其他</label></span>
 	</p>
 	<hr>
 	<div style="width: 300px; height: 30px; margin: 0 auto;">
-		<button goWhere="" class="btn btn-warning">继续编辑详细信息</button>
-		<button goWhere="lookingLover" class="btn btn-success">先睹为快</button>
-
+		<button goWhere="nextDetailInfos" class="submit btn btn-warning">继续编辑详细信息</button>
+		<button goWhere="lookingLover" class="submit btn btn-success">先睹为快</button>
 	</div>
 </body>
 </html>

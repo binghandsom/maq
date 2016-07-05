@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  * 字符处理类
  * 
@@ -49,8 +48,7 @@ public class StringUtil extends StringUtils {
 			 * "chr(38)").replace("%", "chr(37)").replace("\\", "chr(92)")
 			 * .replace("\"", "chr(34)").replace("_", "chr(95)");
 			 */
-			str = str.replace("'", "''").replace("%", "\\%")
-					.replace("\\", "\\\\").replace("_", "\\_");
+			str = str.replace("'", "''").replace("%", "\\%").replace("\\", "\\\\").replace("_", "\\_");
 		}
 		return str;
 	}
@@ -125,8 +123,7 @@ public class StringUtil extends StringUtils {
 	 * @lastModified
 	 * @history
 	 */
-	public static String makeSearchSql(Map<String, Object> value,
-			String[] searchKeys, String[] columNames) {
+	public static String makeSearchSql(Map<String, Object> value, String[] searchKeys, String[] columNames) {
 		if (searchKeys == null || columNames == null) {
 			return "";
 		}
@@ -137,8 +134,7 @@ public class StringUtil extends StringUtils {
 			}
 			sb.append(" and (");
 			for (String col : columNames) {
-				sb.append(col).append(" like :key").append(index)
-						.append(" or ");
+				sb.append(col).append(" like :key").append(index).append(" or ");
 			}
 			// 去除最后一个“or”，如果有的话
 			int last = sb.lastIndexOf("or");
@@ -150,7 +146,6 @@ public class StringUtil extends StringUtils {
 		}
 		return sb.toString();
 	}
-
 
 	/**
 	 * 
@@ -179,8 +174,7 @@ public class StringUtil extends StringUtils {
 	 * @lastModified
 	 * @history
 	 */
-	public static boolean isListEquals(List<String> srcList,
-			List<String> objList) {
+	public static boolean isListEquals(List<String> srcList, List<String> objList) {
 		if (isBlankList(srcList) && isBlankList(objList)) {
 
 			return Boolean.TRUE;
@@ -252,22 +246,25 @@ public class StringUtil extends StringUtils {
 
 	/**
 	 * 
-	 *  判断list和数组中的内容是否相同
-	 *  @param srcList
-	 *  @param objArrays
-	 *  @return
-	 *  @author hypan
-	 *  @created 2015年2月28日 下午4:41:33
-	 *  @lastModified
-	 *  @history
+	 * 判断list和数组中的内容是否相同
+	 * 
+	 * @param srcList
+	 * @param objArrays
+	 * @return
+	 * @author hypan
+	 * @created 2015年2月28日 下午4:41:33
+	 * @lastModified
+	 * @history
 	 */
-	public static boolean isListEqualsArrays(List<String> srcList,
-			String[] objArrays) {
-		return isListEquals(srcList,getListByArrays(objArrays));
-		
+	public static boolean isListEqualsArrays(List<String> srcList, String[] objArrays) {
+		return isListEquals(srcList, getListByArrays(objArrays));
+
 	}
 
-	
+	public static String ifNullToEmpty(String str) {
+		return (null == str) ? "" : str;
+	}
+
 	public static void main(String[] args) {
 		System.out.println(StringUtils.split(null, ","));
 	}

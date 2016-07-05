@@ -88,7 +88,7 @@ public class AccountSvcImpl implements AccountSvc {
 		Account account2 = accountDao.queryOne(query);
 		if (account2 != null) {
 			// 将用户信息保存至session
-			session.setAttribute("userAccount", account2);
+			session.setAttribute("account", account2);
 			rm.setSuccess(true);
 		} else {
 			int failTimes = 1;
@@ -329,5 +329,4 @@ public class AccountSvcImpl implements AccountSvc {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

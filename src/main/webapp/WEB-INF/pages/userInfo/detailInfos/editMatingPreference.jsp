@@ -25,22 +25,6 @@
 
 </head>
 <body>
-	<!-- private int gender;// 性别
-	private int minAge;//最小年龄
-	private int maxAge;//最大年龄
-	private String workingProvince;//工作省份
-	private String workingCity;//工作城市
-	private String homeProvince;//家乡省份
-	private String homeCity;//家乡城市
-	private int marriage;//婚姻状态；
-	private String eduLevel;//受教育水平
-	private Long minSalary;//最低月收入
-	private Long maxSalary;//最高月收入
-	private String haveChild;//是否有孩子
-	private int minHeight;//最小身高
-	private int maxHeight;//最大身高
-	private int minWeight;//最小体重
-	private int maxWeight;//最大体重 -->
 	<h2>理想中的另一半应该满足的要求：</h2>
 	<hr />
 	<input type="hidden" name="minAge" value="18">
@@ -116,14 +100,14 @@
 		<div id="salary-range"></div>
 		<label for="age-range">年龄</label> <span id="ageRangeShow">18岁~25岁</span>
 		<div id="age-range"></div>
-		<label for="height-range">身高</label> <span id="heightRangeShow">160cm~180cm</span>
+		<label for="height-range">身高</label> <span id="heightRangeShow">150cm~180cm</span>
 		<div id="height-range"></div>
 
 	</fieldset>
 	<hr>
 	<div style="width: 300px; height: 30px; margin: 0 auto;">
-		<button goWhere="" class="btn btn-warning">继续编辑详细信息</button>
-		<button goWhere="lookingLover" class="btn btn-success">先睹为快</button>
+		<button goWhere="" class="submit btn btn-warning">继续编辑详细信息</button>
+		<button goWhere="lookingLover" class="submit btn btn-success">先睹为快</button>
 
 	</div>
 </body>

@@ -15,9 +15,12 @@
 <!--基于bootstrup的响应式jQuery滚动新闻插件-->
 <link href="${ctx }/resources/css/common/site.css" rel="stylesheet"
 	type="text/css" />
-<script src="${ctx }/resources/js/scrollJs.js" type="text/javascript" charset="utf-8"></script>
-<script src="${ctx }/resources/js/index.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="${ctx }/resources/css/index.css" />
+<script src="${ctx }/resources/js/scrollJs.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="${ctx }/resources/js/index.js" type="text/javascript"
+	charset="utf-8"></script>
+<link rel="stylesheet" type="text/css"
+	href="${ctx }/resources/css/index.css" />
 </head>
 
 <body>
@@ -32,7 +35,8 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#"><img src="${ctx}/resources/img/97bird.png" /></a>
+			<a class="navbar-brand" href="#"><img
+				src="${ctx}/resources/img/97bird.png" /></a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -94,9 +98,39 @@
 
 	</div>
 	<div class="container content">
+		${userMainInfos }
 		<div class="row">
 			<div class="col-lg-9 col-md-9 col-sm-9">
+				<c:forEach var="userMainInfo" items="${userMainInfos}"
+					varStatus="status" step="1">
+					<div class="col-sm-6 col-md-6">
+						<div class="row personCell" style="margin-top: 10px;">
+							<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
+								<a href="#"> <img style="width: 140px; height: 170px;"
+									src="${ ctx}/userMainInfo/loadPhoto?picName=${userMainInfo.headPic }&picType=headPicture"
+									alt="...">
+								</a>
+							</div>
 
+							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+								<div class="mainInfo"
+									style="height: 150px; width: 100%; padding-right: 5px;">
+									<h3>
+										昵称：<b>${userMainInfo.nickName}</b>
+									</h3>
+									<div class="selfInfo">18岁，${userMainInfo.height }cm，${userMainInfo.constellation}，月收入￥${userMainInfo.salary }
+										&nbsp;${userMainInfo.declaration }</div>
+									<div class="lookingFor">
+										正在寻找：芜湖 19-22岁 169-178cm 2000-5000月收入 未婚 的男生
+										<div class="sayHello">
+											<a href="#"></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 				<div class="col-sm-6 col-md-6">
 					<div class="row personCell" style="margin-top: 10px;">
 						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
@@ -122,131 +156,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6 col-md-6">
-					<div class="row personCell" style="margin-top: 10px;">
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
-							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
-							</a>
-						</div>
-
-						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-							<div class="mainInfo"
-								style="height: 150px; width: 100%; padding-right: 5px;">
-								<h3>
-									昵称：<b>可爱的狐狸</b>
-								</h3>
-								<div class="selfInfo">18岁，安徽芜湖，162cm，2000-5000</div>
-								<div class="lookingFor">
-									正在寻找：芜湖 19-22岁 169-178cm 2000-5000月收入 未婚 的男生
-									<div class="sayHello">
-										<a href="#"></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-6">
-					<div class="row personCell" style="margin-top: 10px;">
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
-							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
-							</a>
-						</div>
-
-						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-							<div class="mainInfo"
-								style="height: 150px; width: 100%; padding-right: 5px;">
-								<h3>
-									昵称：<b>可爱的狐狸</b>
-								</h3>
-								<div class="selfInfo">18岁，安徽芜湖，162cm，2000-5000</div>
-								<div class="lookingFor">
-									正在寻找：芜湖 19-22岁 169-178cm 2000-5000月收入 未婚 的男生
-									<div class="sayHello">
-										<a href="#"></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-6">
-					<div class="row personCell" style="margin-top: 10px;">
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
-							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
-							</a>
-						</div>
-
-						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-							<div class="mainInfo"
-								style="height: 150px; width: 100%; padding-right: 5px;">
-								<h3>
-									昵称：<b>可爱的狐狸</b>
-								</h3>
-								<div class="selfInfo">18岁，安徽芜湖，162cm，2000-5000</div>
-								<div class="lookingFor">
-									正在寻找：芜湖 19-22岁 169-178cm 2000-5000月收入 未婚 的男生
-									<div class="sayHello">
-										<a href="#"></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-6">
-					<div class="row personCell" style="margin-top: 10px;">
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
-							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
-							</a>
-						</div>
-
-						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-							<div class="mainInfo"
-								style="height: 150px; width: 100%; padding-right: 5px;">
-								<h3>
-									昵称：<b>可爱的狐狸</b>
-								</h3>
-								<div class="selfInfo">18岁，安徽芜湖，162cm，2000-5000</div>
-								<div class="lookingFor">
-									正在寻找：芜湖 19-22岁 169-178cm 2000-5000月收入 未婚 的男生
-									<div class="sayHello">
-										<a href="#"></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-6">
-					<div class="row personCell" style="margin-top: 10px;">
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 headPic">
-							<a href="#"> <img style="width: 140px; height: 170px;"
-								src="${ctx}/resources/img/touxiangDemo.jpg" alt="...">
-							</a>
-						</div>
-
-						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-							<div class="mainInfo"
-								style="height: 150px; width: 100%; padding-right: 5px;">
-								<h3>
-									昵称：<b>可爱的狐狸</b>
-								</h3>
-								<div class="selfInfo">18岁，安徽芜湖，162cm，2000-5000</div>
-								<div class="lookingFor">
-									正在寻找：芜湖 19-22岁 169-178cm 2000-5000月收入 未婚 的男生
-									<div class="sayHello">
-										<a href="#"></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 
 				<!--分页-->
 				<nav>
@@ -320,7 +230,8 @@
 		<div class="media col-lg-8 col-md-8 col-sm-8">
 			<div class="col-lg-6 col-md-6 col-sm-6 ">
 				<div class="media-left ">
-					<a href="#"> <img class="media-object" src="${ctx}/resources/img/yongbao.jpg"
+					<a href="#"> <img class="media-object"
+						src="${ctx}/resources/img/yongbao.jpg"
 						style="width: 270px; height: 290px; padding: 10px; border: 5px solid #dedede; -moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px;"
 						alt="...">
 					</a>
@@ -334,7 +245,8 @@
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 ">
 				<div class="media-left ">
-					<a href="#"> <img class="media-object" src="${ctx}/resources/img/yongbao.jpg"
+					<a href="#"> <img class="media-object"
+						src="${ctx}/resources/img/yongbao.jpg"
 						style="width: 270px; height: 290px; padding: 10px; border: 5px solid #dedede; -moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px;"
 						alt="...">
 					</a>
@@ -348,7 +260,8 @@
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 ">
 				<div class="media-left ">
-					<a href="#"> <img class="media-object" src="${ctx}/resources/img/yongbao.jpg"
+					<a href="#"> <img class="media-object"
+						src="${ctx}/resources/img/yongbao.jpg"
 						style="width: 270px; height: 290px; padding: 10px; border: 5px solid #dedede; -moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px;"
 						alt="...">
 					</a>
@@ -362,7 +275,8 @@
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 ">
 				<div class="media-left ">
-					<a href="#"> <img class="media-object" src="${ctx}/resources/img/yongbao.jpg"
+					<a href="#"> <img class="media-object"
+						src="${ctx}/resources/img/yongbao.jpg"
 						style="width: 270px; height: 290px; padding: 10px; border: 5px solid #dedede; -moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px;"
 						alt="...">
 					</a>
@@ -376,7 +290,8 @@
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 ">
 				<div class="media-left ">
-					<a href="#"> <img class="media-object" src="${ctx}/resources/img/yongbao.jpg"
+					<a href="#"> <img class="media-object"
+						src="${ctx}/resources/img/yongbao.jpg"
 						style="width: 270px; height: 290px; padding: 10px; border: 5px solid #dedede; -moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px;"
 						alt="...">
 					</a>
@@ -390,7 +305,8 @@
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 ">
 				<div class="media-left ">
-					<a href="#"> <img class="media-object" src="${ctx}/resources/img/yongbao.jpg"
+					<a href="#"> <img class="media-object"
+						src="${ctx}/resources/img/yongbao.jpg"
 						style="width: 270px; height: 290px; padding: 10px; border: 5px solid #dedede; -moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px;"
 						alt="...">
 					</a>
@@ -417,8 +333,8 @@
 										<li class="news-item">
 											<table cellpadding="4">
 												<tr>
-													<td><img src="${ctx}/resources/images/1.png" width="60"
-														class="img-circle" /></td>
+													<td><img src="${ctx}/resources/images/1.png"
+														width="60" class="img-circle" /></td>
 													<td>Lorem ipsum dolor sit amet, consectetur adipiscing
 														elit. Nullam in venenatis enim... <a href="#">Read
 															more...</a>
@@ -429,8 +345,8 @@
 										<li class="news-item">
 											<table cellpadding="4">
 												<tr>
-													<td><img src="${ctx}/resources/images/2.png" width="60"
-														class="img-circle" /></td>
+													<td><img src="${ctx}/resources/images/2.png"
+														width="60" class="img-circle" /></td>
 													<td>Lorem ipsum dolor sit amet, consectetur adipiscing
 														elit. Nullam in venenatis enim... <a href="#">Read
 															more...</a>
@@ -441,8 +357,8 @@
 										<li class="news-item">
 											<table cellpadding="4">
 												<tr>
-													<td><img src="${ctx}/resources/images/3.png" width="60"
-														class="img-circle" /></td>
+													<td><img src="${ctx}/resources/images/3.png"
+														width="60" class="img-circle" /></td>
 													<td>Lorem ipsum dolor sit amet, consectetur adipiscing
 														elit. Nullam in venenatis enim... <a href="#">Read
 															more...</a>
@@ -453,8 +369,8 @@
 										<li class="news-item">
 											<table cellpadding="4">
 												<tr>
-													<td><img src="${ctx}/resources/images/4.png" width="60"
-														class="img-circle" /></td>
+													<td><img src="${ctx}/resources/images/4.png"
+														width="60" class="img-circle" /></td>
 													<td>Lorem ipsum dolor sit amet, consectetur adipiscing
 														elit. Nullam in venenatis enim... <a href="#">Read
 															more...</a>
@@ -465,8 +381,8 @@
 										<li class="news-item">
 											<table cellpadding="4">
 												<tr>
-													<td><img src="${ctx}/resources/images/5.png" width="60"
-														class="img-circle" /></td>
+													<td><img src="${ctx}/resources/images/5.png"
+														width="60" class="img-circle" /></td>
 													<td>Lorem ipsum dolor sit amet, consectetur adipiscing
 														elit. Nullam in venenatis enim... <a href="#">Read
 															more...</a>
@@ -477,8 +393,8 @@
 										<li class="news-item">
 											<table cellpadding="4">
 												<tr>
-													<td><img src="${ctx}/resources/images/6.png" width="60"
-														class="img-circle" /></td>
+													<td><img src="${ctx}/resources/images/6.png"
+														width="60" class="img-circle" /></td>
 													<td>Lorem ipsum dolor sit amet, consectetur adipiscing
 														elit. Nullam in venenatis enim... <a href="#">Read
 															more...</a>
@@ -489,8 +405,8 @@
 										<li class="news-item">
 											<table cellpadding="4">
 												<tr>
-													<td><img src="${ctx}/resources/images/7.png" width="60"
-														class="img-circle" /></td>
+													<td><img src="${ctx}/resources/images/7.png"
+														width="60" class="img-circle" /></td>
 													<td>Lorem ipsum dolor sit amet, consectetur adipiscing
 														elit. Nullam in venenatis enim... <a href="#">Read
 															more...</a>
@@ -511,7 +427,8 @@
 
 	<div id="arrowScroll">
 		<div id="toTop" class="scrollItem">
-			<img src="${ctx}/resources/img/arrow_96px - up.png" style="width: 100%; height: 100%;" />
+			<img src="${ctx}/resources/img/arrow_96px - up.png"
+				style="width: 100%; height: 100%;" />
 		</div>
 		<div id="toBottom" class="scrollItem">
 			<img src="${ctx}/resources/img/arrow_96px - down.png"

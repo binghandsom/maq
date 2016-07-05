@@ -11,7 +11,7 @@ import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 public class AliDayuSMSUtil {
 	private final static String URL = "http://gw.api.taobao.com/router/rest";
 	private final static String APPKEY = "23342306";
-	private final static String SECRET = "c65e954cadcc6c819d4b0415ad521a3b";
+	private final static String SECRET = "ae52030eaa61b96754954c4685d7b3e4";
 	public final static String SIGNNAME_REG = "注册验证";
 	public final static String SIGNNAME_CHANGE_PASSWORD = "变更验证";
 	private static TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, SECRET);
@@ -32,7 +32,7 @@ public class AliDayuSMSUtil {
 		req.setSmsFreeSignName(signName);
 		String validateCode = generateRandomCode();
 		System.out.println(validateCode);
-		req.setSmsParamString("{\"code\":\" " + validateCode + "\",\"product\":\"wantLover\"}");
+		req.setSmsParamString("{\"code\":\" " + validateCode + "\",\"product\":\"我要觅情网\"}");
 		req.setRecNum(targetPhoneNum);
 		if (SIGNNAME_REG.equals(signName)) {
 			// 注册短信模板

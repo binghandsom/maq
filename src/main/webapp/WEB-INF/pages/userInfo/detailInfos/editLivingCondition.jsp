@@ -80,25 +80,25 @@
 	<div>
 		<label class="section" for="consume">较大的消费</label>
 		<p id="consume">
-			<span><input id="consume_1" name="consume_1" type="checkbox"
+			<span><input id="consume_1" name="consume" type="checkbox"
 				value="美食"><label for="consume_1">美食</label></span> <span><input
-				id="consume_2" name="consume_2" type="checkbox" value="服饰"><label
+				id="consume_2" name="consume" type="checkbox" value="服饰"><label
 				for="consume_2">服饰</label></span> <span><input id="consume_3"
-				name="consume_3" type="checkbox" value="化妆"><label
+				name="consume" type="checkbox" value="化妆"><label
 				for="consume_3">化妆</label></span> <span><input id="consume_4"
-				name="consume_4" type="checkbox" value="健身"><label
+				name="consume" type="checkbox" value="健身"><label
 				for="consume_4">健身</label></span> <span><input id="consume_5"
-				name="consume_5" type="checkbox" value="娱乐"><label
+				name="consume" type="checkbox" value="娱乐"><label
 				for="consume_5">娱乐</label></span> <span><input id="consume_6"
-				name="consume_6" type="checkbox" value="旅行"><label
+				name="consume" type="checkbox" value="旅行"><label
 				for="consume_6">旅行</label></span> <span><input id="consume_7"
-				name="consume_7" type="checkbox" value="社交"><label
+				name="consume" type="checkbox" value="社交"><label
 				for="consume_7">社交</label></span> <span><input id="consume_8"
-				name="consume_8" type="checkbox" value="文化"><label
+				name="consume" type="checkbox" value="文化"><label
 				for="consume_8">文化</label></span> <span><input id="consume_9"
-				name="consume_9" type="checkbox" value="自我提升"><label
+				name="consume" type="checkbox" value="自我提升"><label
 				for="consume_9">自我提升</label></span> <span><input id="consume_10"
-				name="consume_10" type="checkbox" value="其他"><label
+				name="consume" type="checkbox" value="其他"><label
 				for="consume_10">其他</label></span>
 		</p>
 
@@ -111,11 +111,9 @@
 	</div>
 	<hr>
 	<div style="width: 300px; height: 30px; margin: 0 auto;">
-		<button goWhere="" class="btn btn-warning">继续编辑详细信息</button>
-		<button goWhere="lookingLover" class="btn btn-success">先睹为快</button>
-
+		<button goWhere="nextDetailInfos" class="submit btn btn-warning">继续编辑详细信息</button>
+		<button goWhere="lookingLover" class="submit btn btn-success">先睹为快</button>
 	</div>
-
 
 
 </body>

@@ -22,7 +22,7 @@
 	</form>
 
 	<hr>
-	<button class="btn-primary" data-toggle="modal"
+	<button class="btn-primary" id="uploadTriggerBtn" data-toggle="modal"
 		data-target="#photoChoosingModal">上传照片</button>
 	<hr>
 	<h3 style="color: darkred;">我的照片列表</h3>
@@ -72,10 +72,15 @@
 				<div class="modal-body" style="border: solid 1px;">
 					<img id="addPhotoImgBtn" alt=""
 						src="${ctx}/resources/img/system/add_photo72px.png">
+					<div id="previewBox" style="display: inline;">
+						<img class="previewPic" alt="" width="100px" height="100px"
+							src="${ctx}/resources/img/system/loadingPicture.gif">
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消上传</button>
-					<button type="button" class="btn btn-primary">上传</button>
+					<button type="button" id="confirmUploadPhotosBtn"
+						class="btn btn-primary">上传</button>
 				</div>
 			</div>
 		</div>

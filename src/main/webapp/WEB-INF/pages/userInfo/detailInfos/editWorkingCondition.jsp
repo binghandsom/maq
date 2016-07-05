@@ -99,8 +99,8 @@
 	</div>
 	<hr>
 	<div style="width: 300px; height: 30px; margin: 0 auto;">
-		<button goWhere="" class="btn btn-warning">继续编辑详细信息</button>
-		<button goWhere="lookingLover" class="btn btn-success">先睹为快</button>
+		<button goWhere="nextDetailInfos" class="submit btn btn-warning">继续编辑详细信息</button>
+		<button goWhere="lookingLover" class="submit btn btn-success">先睹为快</button>
 
 	</div>
 

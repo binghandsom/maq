@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  * --------------------------------------------------------------------------
  */
 public class ImageUtil {
-	public static final String TEMP_PICTURE="tempPicture";//临时图片
-	public static final String HEAD_PICTURE="headPicture";
+	public static final String TEMP_PICTURE = "tempPicture";// 临时图片
+	public static final String HEAD_PICTURE = "headPicture";
+	public static final String TEMP_PICTURE_LIST = "tempPictureList";
+
 	public static boolean isImageFile(File file) {
 		Image image;
 		try {

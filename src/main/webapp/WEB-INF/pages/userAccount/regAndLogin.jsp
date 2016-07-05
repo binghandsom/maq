@@ -19,13 +19,11 @@
 
 		<div class="col-lg-6 col-sm-6 col-md-6">
 			<div class="" style="border-right: dashed 1px #008000">
-				<a class="navbar-brand" href="#"><img
-					src="${ctx }/resources/img/signature.PNG" /></a>
+				<a class="navbar-brand" href="#"><img height="70px"
+					src="${ctx }/resources/img/signature.png" /></a>
 
 			</div>
-			<div class="" style="font-family: '华文行楷';">
-				<h1>寻爱的鹊桥</h1>
-			</div>
+
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6" style="padding-top: 30px;">
 			<div id="loginForm">

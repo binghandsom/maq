@@ -3,42 +3,14 @@
  */
 $(function() {
 
-	$("#marriage").selectmenu({
-		change : function(event, data) {
-			alert(data.item.value);
-		}
-	});
-	$("#workingProvince").selectmenu({
-		change : function(event, data) {
-			alert(data.item.value);
-		}
-	});
+	$("#marriage").selectmenu({});
+	$("#workingProvince").selectmenu({});
 
-	$("#workingCity").selectmenu({
-		change : function(event, data) {
-			alert(data.item.value);
-		}
-	});
-	$("#homeProvince").selectmenu({
-		change : function(event, data) {
-			alert(data.item.value);
-		}
-	});
-	$("#homeCity").selectmenu({
-		change : function(event, data) {
-			alert(data.item.value);
-		}
-	});
-	$("#eduLevel").selectmenu({
-		change : function(event, data) {
-			alert(data.item.value);
-		}
-	});
-	$("#haveChild").selectmenu({
-		change : function(event, data) {
-			alert(data.item.value);
-		}
-	});
+	$("#workingCity").selectmenu({});
+	$("#homeProvince").selectmenu({});
+	$("#homeCity").selectmenu({});
+	$("#eduLevel").selectmenu({});
+	$("#haveChild").selectmenu({});
 
 	$("#salary-range").slider({
 		range : true,
@@ -72,7 +44,7 @@ $(function() {
 				min : 140,
 				max : 210,
 				step : 1,
-				values : [ 160, 180 ],
+				values : [ 150, 180 ],
 				slide : function(event, ui) {
 					$("#heightRangeShow").html(
 							ui.values[0] + "cm~" + ui.values[1] + "cm");
@@ -85,4 +57,52 @@ $(function() {
 			alert(data.item.value);
 		}
 	});
+	$("button.submit").click(function() {
+		var goWhere = $(this).attr("goWhere");
+
+		var marriage = $("#marriage option:selected").val();
+		var workingProvince = $("#workingProvince option:selected").val();
+		var workingCity = $("#workingCity option:selected").val();
+		var homeProvince = $("#homeProvince option:selected").val();
+		var homeCity = $("#homeCity option:selected").val();
+		var eduLevel = $("#eduLevel option:selected").val();
+		var haveChild = $("#haveChild option:selected").val();
+		var minAge = $("input[name='minAge']").val();
+		var maxAge = $("input[name='maxAge']").val();
+		var minSalary = $("input[name='minSalary']").val();
+		var maxSalary = $("input[name='maxSalary']").val();
+		var minHeight = $("input[name='minHeight']").val();
+		var maxHeight = $("input[name='maxHeight']").val();
+
+		var data = JSON.stringify({
+			marriage : marriage,
+			workingProvince : workingProvince,
+			workingCity : workingCity,
+			homeProvince : homeProvince,
+			eduLevel : eduLevel,
+			homeCity : homeCity,
+			haveChild : haveChild,
+			minAge : minAge,
+			maxAge : maxAge,
+			minSalary : minSalary,
+			maxSalary : maxSalary,
+			minHeight : minHeight,
+			maxHeight : maxHeight
+		});
+		$.ajax({
+			url : ctx + "/detailInfos/doEditMatingPreference",
+			data : data,
+			type : 'POST',
+			async : false,
+			contentType : "application/json;charset=utf-8", //
+			success : function(result) {
+				if (result.success) {
+					window.location.href = ctx + "/detailInfos/editPhotos";
+				} else {
+					alert("发生了未知错误");
+				}
+			}
+		});
+	});
+
 });
